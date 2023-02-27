@@ -1,0 +1,90 @@
+[==Phoenix==]
+
+PORT=4001 iex --sname node_4001 -S mix phx.server				>>> Run Server (in a local Cluster)
+PORT=4002 iex --sname node_4002 -S mix phx.server
+
+http://localhost:4000/dev/mailbox							>>> To access the emails that phoenix 'sent' 
+
+https://www.literatelabs.com/p/how-to-get-verification-emails-for		>>> To actually sent an email
+
+
+----------------------------------------------------------------------------------------------------------------------------
+
+
+[==PostgreSQL==]
+
+pg_ctl start 										>>> Start Postgres service
+pg_ctl status                                                           >>> [optional] Check if server already running
+
+psql -d dorm_dev -U postgres								>>> Connect to Database (run SQL scripts directly)
+
+\l                                                                      >>> List All Databases
+\conninfo                                                               >>> Get current Address & Port
+
+psql -U postgres -c 'DROP DATABASE IF EXISTS dorm_test;'			>>> if tests failed: table already exists
+
+
+----------------------------------------------------------------------------------------------------------------------------
+
+
+[==Ecto==]
+
+mix ecto.create                                                         >>> New repo
+mix ecto.migrate                                                        >>> Add newly created table(s)
+mix ecto.drop                                                           >>> [optional] Drop repo
+mix ecto.reset                                                          >>> automatic 'drop --> create --> migrate --> seed'
+
+
+----------------------------------------------------------------------------------------------------------------------------
+
+
+[==Contexts==]
+
+
+*** don't forget to add authentication system first! ***
+mix phx.gen.auth Accounts User users --binary-id --hashing-lib argon2
+
+
+>>> Tenants
+
+mix phx.gen.live Tenants Customer customers id_number first_name first_name_alt last_name last_name_alt date_of_birth religion nationality sex address issue_by date_of_issue date_of_expiry photo phone line occupation emergency_contact --binary-id
+
+mix phx.gen.live Tenants DailyCustomer daily_customers b_current customer_id:references:customers --binary-id
+
+mix phx.gen.live Tenants MonthlyCustomer monthly_customers b_contract b_current b_tenant customer_id:references:customers --binary-id
+
+
+>>> Facilities
+
+mix phx.gen.live Facilities Building buildings name address tax_id phone calc_type_water:decimal calc_type_electric:decimal unit_price_water:decimal unit_price_eletric:decimal --binary-id  
+
+mix phx.gen.live Facilities Floor floors floor_number building_id:references:buildings --binary-id
+
+mix phx.gen.live Facilities Room rooms room_number b_booked b_occupied floor_id:references:floors --binary-id   
+
+
+>>> Bookings
+
+mix phx.gen.live Bookings DailyBooking daily_bookings check_in:date check_out:date duration_day:integer remarks daily_customer_id:references:daily_customers room_id:references:rooms --binary-id
+
+mix phx.gen.live Bookings DailyCheckIn daily_check_ins check_in:date check_out:date time_in:time time_out:time duration_day:integer room_number deposit:decimal from to remarks daily_customer_id:references:daily_customers daily_booking_id:references:daily_bookings room_id:references:rooms --binary-id
+
+mix phx.gen.live Bookings MonthlyBooking monthly_bookings check_in:date check_out:date duration_month:integer duration_day:integer remarks rent_fees:decimal service_fees:decimal deposit:decimal advance_payment:decimal keycard_fees:decimal other_labels other_fees:decimal remaining:decimal total:decimal monthly_customer_id:references:monthly_customers room_id:references:rooms --binary-id
+
+mix phx.gen.live Bookings MonthlyContract monthly_contracts date_signed:date check_in:date check_out:date duration_month:integer duration_day:integer room_number rent_fees:decimal service_fees:decimal deposit:decimal advance_payment:decimal keycard_fees:decimal keycard_number other_labels other_fees:decimal meter_water:decimal meter_electric:decimal remarks monthly_customer_id:references:monthly_customers monthly_booking_id:references:monthly_bookings room_id:references:rooms --binary-id
+
+
+>>> Invoices
+
+mix phx.gen.live Invoices DailyBookingFee daily_booking_fees booking_fees:decimal deposit:decimal room_fees:decimal other_labels other_fees:decimal remaining:decimal total:decimal daily_booking_id:references:daily_bookings --binary-id  
+
+mix phx.gen.live Invoices DailyInvoice daily_invoices deposit:decimal keycard_fees:decimal other_labels other_fees:decimal remaining:decimal total:decimal daily_check_in_id:references:daily_check_ins --binary-id
+
+mix phx.gen.live Invoices MonthlyBookingFee monthly_booking_fees booking_fees:decimal deposit:decimal room_fees:decimal other_labels other_fees:decimal remaining:decimal total:decimal monthly_booking_id:references:monthly_bookings --binary-id 
+
+mix phx.gen.live Invoices MonthlyInvoice monthly_invoices bill_cycle:date advance_payment:decimal water_start:decimal water_end:decimal water_unit:decimal electric_start:decimal electric_end:decimal other_labels other_fees:decimal total:decimal monthly_contract_id:references:monthly_contracts --binary-id
+
+
+>>> Receipt
+
+mix phx.gen.live Receipts MonthlyContractFee monthly_contract_fees deposit:decimal advance_payment:decimal keycard_fees:decimal other_labels other_fees:decimal total:decimal monthly_contract_id:references:monthly_contracts --binary-id
