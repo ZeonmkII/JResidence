@@ -197,4 +197,100 @@ defmodule JResidence.Invoices do
   def change_daily_invoice(%DailyInvoice{} = daily_invoice, attrs \\ %{}) do
     DailyInvoice.changeset(daily_invoice, attrs)
   end
+
+  alias JResidence.Invoices.MonthlyBookingFee
+
+  @doc """
+  Returns the list of monthly_booking_fees.
+
+  ## Examples
+
+      iex> list_monthly_booking_fees()
+      [%MonthlyBookingFee{}, ...]
+
+  """
+  def list_monthly_booking_fees do
+    Repo.all(MonthlyBookingFee)
+  end
+
+  @doc """
+  Gets a single monthly_booking_fee.
+
+  Raises `Ecto.NoResultsError` if the Monthly booking fee does not exist.
+
+  ## Examples
+
+      iex> get_monthly_booking_fee!(123)
+      %MonthlyBookingFee{}
+
+      iex> get_monthly_booking_fee!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_monthly_booking_fee!(id), do: Repo.get!(MonthlyBookingFee, id)
+
+  @doc """
+  Creates a monthly_booking_fee.
+
+  ## Examples
+
+      iex> create_monthly_booking_fee(%{field: value})
+      {:ok, %MonthlyBookingFee{}}
+
+      iex> create_monthly_booking_fee(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_monthly_booking_fee(attrs \\ %{}) do
+    %MonthlyBookingFee{}
+    |> MonthlyBookingFee.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a monthly_booking_fee.
+
+  ## Examples
+
+      iex> update_monthly_booking_fee(monthly_booking_fee, %{field: new_value})
+      {:ok, %MonthlyBookingFee{}}
+
+      iex> update_monthly_booking_fee(monthly_booking_fee, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_monthly_booking_fee(%MonthlyBookingFee{} = monthly_booking_fee, attrs) do
+    monthly_booking_fee
+    |> MonthlyBookingFee.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a monthly_booking_fee.
+
+  ## Examples
+
+      iex> delete_monthly_booking_fee(monthly_booking_fee)
+      {:ok, %MonthlyBookingFee{}}
+
+      iex> delete_monthly_booking_fee(monthly_booking_fee)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_monthly_booking_fee(%MonthlyBookingFee{} = monthly_booking_fee) do
+    Repo.delete(monthly_booking_fee)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking monthly_booking_fee changes.
+
+  ## Examples
+
+      iex> change_monthly_booking_fee(monthly_booking_fee)
+      %Ecto.Changeset{data: %MonthlyBookingFee{}}
+
+  """
+  def change_monthly_booking_fee(%MonthlyBookingFee{} = monthly_booking_fee, attrs \\ %{}) do
+    MonthlyBookingFee.changeset(monthly_booking_fee, attrs)
+  end
 end

@@ -1,0 +1,32 @@
+<.header>
+  Monthly booking fee <%= @monthly_booking_fee.id %>
+  <:subtitle>This is a monthly_booking_fee record from your database.</:subtitle>
+  <:actions>
+    <.link patch={~p"/monthly_booking_fees/#{@monthly_booking_fee}/show/edit"} phx-click={JS.push_focus()}>
+      <.button>Edit monthly_booking_fee</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Booking fees"><%= @monthly_booking_fee.booking_fees %></:item>
+  <:item title="Deposit"><%= @monthly_booking_fee.deposit %></:item>
+  <:item title="Room fees"><%= @monthly_booking_fee.room_fees %></:item>
+  <:item title="Other labels"><%= @monthly_booking_fee.other_labels %></:item>
+  <:item title="Other fees"><%= @monthly_booking_fee.other_fees %></:item>
+  <:item title="Remaining"><%= @monthly_booking_fee.remaining %></:item>
+  <:item title="Total"><%= @monthly_booking_fee.total %></:item>
+</.list>
+
+<.back navigate={~p"/monthly_booking_fees"}>Back to monthly_booking_fees</.back>
+
+<.modal :if={@live_action == :edit} id="monthly_booking_fee-modal" show on_cancel={JS.patch(~p"/monthly_booking_fees/#{@monthly_booking_fee}")}>
+  <.live_component
+    module={JResidenceWeb.MonthlyBookingFeeLive.FormComponent}
+    id={@monthly_booking_fee.id}
+    title={@page_title}
+    action={@live_action}
+    monthly_booking_fee={@monthly_booking_fee}
+    patch={~p"/monthly_booking_fees/#{@monthly_booking_fee}"}
+  />
+</.modal>

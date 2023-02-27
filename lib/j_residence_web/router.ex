@@ -81,7 +81,7 @@ defmodule JResidenceWeb.Router do
     live "/daily_bookings/:id", DailyBookingLive.Show, :show
     live "/daily_bookings/:id/show/edit", DailyBookingLive.Show, :edit
 
-    # Daily Check-In (Walk-in customers)
+    # Daily Check-In
     live "/daily_check_ins", DailyCheckInLive.Index, :index
     live "/daily_check_ins/new", DailyCheckInLive.Index, :new
     live "/daily_check_ins/:id/edit", DailyCheckInLive.Index, :edit
@@ -97,13 +97,14 @@ defmodule JResidenceWeb.Router do
     live "/monthly_bookings/:id", MonthlyBookingLive.Show, :show
     live "/monthly_bookings/:id/show/edit", MonthlyBookingLive.Show, :edit
 
-    # Monthly Contract (Long-term customers)
+    # Monthly Contract
     live "/monthly_contracts", MonthlyContractLive.Index, :index
     live "/monthly_contracts/new", MonthlyContractLive.Index, :new
     live "/monthly_contracts/:id/edit", MonthlyContractLive.Index, :edit
 
     live "/monthly_contracts/:id", MonthlyContractLive.Show, :show
     live "/monthly_contracts/:id/show/edit", MonthlyContractLive.Show, :edit
+
     # ================================== Invoice ==================================
     # Daily Booking Fee
     live "/daily_booking_fees", DailyBookingFeeLive.Index, :index
@@ -120,6 +121,14 @@ defmodule JResidenceWeb.Router do
 
     live "/daily_invoices/:id", DailyInvoiceLive.Show, :show
     live "/daily_invoices/:id/show/edit", DailyInvoiceLive.Show, :edit
+
+    # Monthly Booking Fee
+    live "/monthly_booking_fees", MonthlyBookingFeeLive.Index, :index
+    live "/monthly_booking_fees/new", MonthlyBookingFeeLive.Index, :new
+    live "/monthly_booking_fees/:id/edit", MonthlyBookingFeeLive.Index, :edit
+
+    live "/monthly_booking_fees/:id", MonthlyBookingFeeLive.Show, :show
+    live "/monthly_booking_fees/:id/show/edit", MonthlyBookingFeeLive.Show, :edit
 
     # ================================== Receipt ==================================
   end

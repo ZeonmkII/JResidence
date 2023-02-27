@@ -42,4 +42,24 @@ defmodule JResidence.InvoicesFixtures do
 
     daily_invoice
   end
+
+  @doc """
+  Generate a monthly_booking_fee.
+  """
+  def monthly_booking_fee_fixture(attrs \\ %{}) do
+    {:ok, monthly_booking_fee} =
+      attrs
+      |> Enum.into(%{
+        booking_fees: "120.5",
+        deposit: "120.5",
+        other_fees: "120.5",
+        other_labels: "some other_labels",
+        remaining: "120.5",
+        room_fees: "120.5",
+        total: "120.5"
+      })
+      |> JResidence.Invoices.create_monthly_booking_fee()
+
+    monthly_booking_fee
+  end
 end

@@ -194,4 +194,107 @@ defmodule JResidence.InvoicesTest do
       assert %Ecto.Changeset{} = Invoices.change_daily_invoice(daily_invoice)
     end
   end
+
+  describe "monthly_booking_fees" do
+    alias JResidence.Invoices.MonthlyBookingFee
+
+    import JResidence.InvoicesFixtures
+
+    @invalid_attrs %{
+      booking_fees: nil,
+      deposit: nil,
+      other_fees: nil,
+      other_labels: nil,
+      remaining: nil,
+      room_fees: nil,
+      total: nil
+    }
+
+    test "list_monthly_booking_fees/0 returns all monthly_booking_fees" do
+      monthly_booking_fee = monthly_booking_fee_fixture()
+      assert Invoices.list_monthly_booking_fees() == [monthly_booking_fee]
+    end
+
+    test "get_monthly_booking_fee!/1 returns the monthly_booking_fee with given id" do
+      monthly_booking_fee = monthly_booking_fee_fixture()
+      assert Invoices.get_monthly_booking_fee!(monthly_booking_fee.id) == monthly_booking_fee
+    end
+
+    test "create_monthly_booking_fee/1 with valid data creates a monthly_booking_fee" do
+      valid_attrs = %{
+        booking_fees: "120.5",
+        deposit: "120.5",
+        other_fees: "120.5",
+        other_labels: "some other_labels",
+        remaining: "120.5",
+        room_fees: "120.5",
+        total: "120.5"
+      }
+
+      assert {:ok, %MonthlyBookingFee{} = monthly_booking_fee} =
+               Invoices.create_monthly_booking_fee(valid_attrs)
+
+      assert monthly_booking_fee.booking_fees == Decimal.new("120.5")
+      assert monthly_booking_fee.deposit == Decimal.new("120.5")
+      assert monthly_booking_fee.other_fees == Decimal.new("120.5")
+      assert monthly_booking_fee.other_labels == "some other_labels"
+      assert monthly_booking_fee.remaining == Decimal.new("0.0")
+      assert monthly_booking_fee.room_fees == Decimal.new("120.5")
+      assert monthly_booking_fee.total == Decimal.new("120.5")
+    end
+
+    test "create_monthly_booking_fee/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Invoices.create_monthly_booking_fee(@invalid_attrs)
+    end
+
+    test "update_monthly_booking_fee/2 with valid data updates the monthly_booking_fee" do
+      monthly_booking_fee = monthly_booking_fee_fixture()
+
+      update_attrs = %{
+        booking_fees: "456.7",
+        deposit: "456.7",
+        other_fees: "456.7",
+        other_labels: "some updated other_labels",
+        remaining: "456.7",
+        room_fees: "456.7",
+        total: "456.7"
+      }
+
+      assert {:ok, %MonthlyBookingFee{} = monthly_booking_fee} =
+               Invoices.update_monthly_booking_fee(monthly_booking_fee, update_attrs)
+
+      assert monthly_booking_fee.booking_fees == Decimal.new("456.7")
+      assert monthly_booking_fee.deposit == Decimal.new("456.7")
+      assert monthly_booking_fee.other_fees == Decimal.new("456.7")
+      assert monthly_booking_fee.other_labels == "some updated other_labels"
+      assert monthly_booking_fee.remaining == Decimal.new("0.0")
+      assert monthly_booking_fee.room_fees == Decimal.new("456.7")
+      assert monthly_booking_fee.total == Decimal.new("456.7")
+    end
+
+    test "update_monthly_booking_fee/2 with invalid data returns error changeset" do
+      monthly_booking_fee = monthly_booking_fee_fixture()
+
+      assert {:error, %Ecto.Changeset{}} =
+               Invoices.update_monthly_booking_fee(monthly_booking_fee, @invalid_attrs)
+
+      assert monthly_booking_fee == Invoices.get_monthly_booking_fee!(monthly_booking_fee.id)
+    end
+
+    test "delete_monthly_booking_fee/1 deletes the monthly_booking_fee" do
+      monthly_booking_fee = monthly_booking_fee_fixture()
+
+      assert {:ok, %MonthlyBookingFee{}} =
+               Invoices.delete_monthly_booking_fee(monthly_booking_fee)
+
+      assert_raise Ecto.NoResultsError, fn ->
+        Invoices.get_monthly_booking_fee!(monthly_booking_fee.id)
+      end
+    end
+
+    test "change_monthly_booking_fee/1 returns a monthly_booking_fee changeset" do
+      monthly_booking_fee = monthly_booking_fee_fixture()
+      assert %Ecto.Changeset{} = Invoices.change_monthly_booking_fee(monthly_booking_fee)
+    end
+  end
 end
