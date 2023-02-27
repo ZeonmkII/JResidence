@@ -20,7 +20,7 @@ defmodule JResidenceWeb.MonthlyInvoiceLive.FormComponent do
         phx-submit="save"
       >
         <.input field={@form[:bill_cycle]} type="date" label="Bill cycle" />
-        <.input field={@form[:advanced_payment]} type="number" label="Advanced payment" step="any" />
+        <.input field={@form[:advance_payment]} type="number" label="Advanced payment" step="any" />
         <.input field={@form[:water_start]} type="number" label="Water start" step="any" />
         <.input field={@form[:water_end]} type="number" label="Water end" step="any" />
         <.input field={@form[:water_unit]} type="number" label="Water unit" step="any" />

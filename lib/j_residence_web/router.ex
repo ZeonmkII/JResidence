@@ -139,6 +139,13 @@ defmodule JResidenceWeb.Router do
     live "/monthly_invoices/:id/show/edit", MonthlyInvoiceLive.Show, :edit
 
     # ================================== Receipt ==================================
+    # Monthly Contract Fee
+    live "/monthly_contract_fees", MonthlyContractFeeLive.Index, :index
+    live "/monthly_contract_fees/new", MonthlyContractFeeLive.Index, :new
+    live "/monthly_contract_fees/:id/edit", MonthlyContractFeeLive.Index, :edit
+
+    live "/monthly_contract_fees/:id", MonthlyContractFeeLive.Show, :show
+    live "/monthly_contract_fees/:id/show/edit", MonthlyContractFeeLive.Show, :edit
   end
 
   # Other scopes may use custom stacks.

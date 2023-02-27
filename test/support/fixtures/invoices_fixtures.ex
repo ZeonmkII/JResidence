@@ -70,7 +70,7 @@ defmodule JResidence.InvoicesFixtures do
     {:ok, monthly_invoice} =
       attrs
       |> Enum.into(%{
-        advanced_payment: "120.5",
+        advance_payment: "120.5",
         bill_cycle: ~D[2023-02-26],
         electric_end: "120.5",
         electric_start: "120.5",

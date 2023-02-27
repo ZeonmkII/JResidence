@@ -303,7 +303,18 @@ defmodule JResidence.InvoicesTest do
 
     import JResidence.InvoicesFixtures
 
-    @invalid_attrs %{advanced_payment: nil, bill_cycle: nil, electric_end: nil, electric_start: nil, other_fees: nil, other_labels: nil, total: nil, water_end: nil, water_start: nil, water_unit: nil}
+    @invalid_attrs %{
+      advance_payment: nil,
+      bill_cycle: nil,
+      electric_end: nil,
+      electric_start: nil,
+      other_fees: nil,
+      other_labels: nil,
+      total: nil,
+      water_end: nil,
+      water_start: nil,
+      water_unit: nil
+    }
 
     test "list_monthly_invoices/0 returns all monthly_invoices" do
       monthly_invoice = monthly_invoice_fixture()
@@ -316,10 +327,23 @@ defmodule JResidence.InvoicesTest do
     end
 
     test "create_monthly_invoice/1 with valid data creates a monthly_invoice" do
-      valid_attrs = %{advanced_payment: "120.5", bill_cycle: ~D[2023-02-26], electric_end: "120.5", electric_start: "120.5", other_fees: "120.5", other_labels: "some other_labels", total: "120.5", water_end: "120.5", water_start: "120.5", water_unit: "120.5"}
+      valid_attrs = %{
+        advance_payment: "120.5",
+        bill_cycle: ~D[2023-02-26],
+        electric_end: "120.5",
+        electric_start: "120.5",
+        other_fees: "120.5",
+        other_labels: "some other_labels",
+        total: "120.5",
+        water_end: "120.5",
+        water_start: "120.5",
+        water_unit: "120.5"
+      }
 
-      assert {:ok, %MonthlyInvoice{} = monthly_invoice} = Invoices.create_monthly_invoice(valid_attrs)
-      assert monthly_invoice.advanced_payment == Decimal.new("120.5")
+      assert {:ok, %MonthlyInvoice{} = monthly_invoice} =
+               Invoices.create_monthly_invoice(valid_attrs)
+
+      assert monthly_invoice.advance_payment == Decimal.new("120.5")
       assert monthly_invoice.bill_cycle == ~D[2023-02-26]
       assert monthly_invoice.electric_end == Decimal.new("120.5")
       assert monthly_invoice.electric_start == Decimal.new("120.5")
@@ -337,10 +361,24 @@ defmodule JResidence.InvoicesTest do
 
     test "update_monthly_invoice/2 with valid data updates the monthly_invoice" do
       monthly_invoice = monthly_invoice_fixture()
-      update_attrs = %{advanced_payment: "456.7", bill_cycle: ~D[2023-02-27], electric_end: "456.7", electric_start: "456.7", other_fees: "456.7", other_labels: "some updated other_labels", total: "456.7", water_end: "456.7", water_start: "456.7", water_unit: "456.7"}
 
-      assert {:ok, %MonthlyInvoice{} = monthly_invoice} = Invoices.update_monthly_invoice(monthly_invoice, update_attrs)
-      assert monthly_invoice.advanced_payment == Decimal.new("456.7")
+      update_attrs = %{
+        advance_payment: "456.7",
+        bill_cycle: ~D[2023-02-27],
+        electric_end: "456.7",
+        electric_start: "456.7",
+        other_fees: "456.7",
+        other_labels: "some updated other_labels",
+        total: "456.7",
+        water_end: "456.7",
+        water_start: "456.7",
+        water_unit: "456.7"
+      }
+
+      assert {:ok, %MonthlyInvoice{} = monthly_invoice} =
+               Invoices.update_monthly_invoice(monthly_invoice, update_attrs)
+
+      assert monthly_invoice.advance_payment == Decimal.new("456.7")
       assert monthly_invoice.bill_cycle == ~D[2023-02-27]
       assert monthly_invoice.electric_end == Decimal.new("456.7")
       assert monthly_invoice.electric_start == Decimal.new("456.7")
@@ -354,14 +392,20 @@ defmodule JResidence.InvoicesTest do
 
     test "update_monthly_invoice/2 with invalid data returns error changeset" do
       monthly_invoice = monthly_invoice_fixture()
-      assert {:error, %Ecto.Changeset{}} = Invoices.update_monthly_invoice(monthly_invoice, @invalid_attrs)
+
+      assert {:error, %Ecto.Changeset{}} =
+               Invoices.update_monthly_invoice(monthly_invoice, @invalid_attrs)
+
       assert monthly_invoice == Invoices.get_monthly_invoice!(monthly_invoice.id)
     end
 
     test "delete_monthly_invoice/1 deletes the monthly_invoice" do
       monthly_invoice = monthly_invoice_fixture()
       assert {:ok, %MonthlyInvoice{}} = Invoices.delete_monthly_invoice(monthly_invoice)
-      assert_raise Ecto.NoResultsError, fn -> Invoices.get_monthly_invoice!(monthly_invoice.id) end
+
+      assert_raise Ecto.NoResultsError, fn ->
+        Invoices.get_monthly_invoice!(monthly_invoice.id)
+      end
     end
 
     test "change_monthly_invoice/1 returns a monthly_invoice changeset" do

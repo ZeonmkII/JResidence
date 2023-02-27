@@ -4,9 +4,42 @@ defmodule JResidenceWeb.MonthlyInvoiceLiveTest do
   import Phoenix.LiveViewTest
   import JResidence.InvoicesFixtures
 
-  @create_attrs %{advanced_payment: "120.5", bill_cycle: "2023-02-26", electric_end: "120.5", electric_start: "120.5", other_fees: "120.5", other_labels: "some other_labels", total: "120.5", water_end: "120.5", water_start: "120.5", water_unit: "120.5"}
-  @update_attrs %{advanced_payment: "456.7", bill_cycle: "2023-02-27", electric_end: "456.7", electric_start: "456.7", other_fees: "456.7", other_labels: "some updated other_labels", total: "456.7", water_end: "456.7", water_start: "456.7", water_unit: "456.7"}
-  @invalid_attrs %{advanced_payment: nil, bill_cycle: nil, electric_end: nil, electric_start: nil, other_fees: nil, other_labels: nil, total: nil, water_end: nil, water_start: nil, water_unit: nil}
+  @create_attrs %{
+    advance_payment: "120.5",
+    bill_cycle: "2023-02-26",
+    electric_end: "120.5",
+    electric_start: "120.5",
+    other_fees: "120.5",
+    other_labels: "some other_labels",
+    total: "120.5",
+    water_end: "120.5",
+    water_start: "120.5",
+    water_unit: "120.5"
+  }
+  @update_attrs %{
+    advance_payment: "456.7",
+    bill_cycle: "2023-02-27",
+    electric_end: "456.7",
+    electric_start: "456.7",
+    other_fees: "456.7",
+    other_labels: "some updated other_labels",
+    total: "456.7",
+    water_end: "456.7",
+    water_start: "456.7",
+    water_unit: "456.7"
+  }
+  @invalid_attrs %{
+    advance_payment: nil,
+    bill_cycle: nil,
+    electric_end: nil,
+    electric_start: nil,
+    other_fees: nil,
+    other_labels: nil,
+    total: nil,
+    water_end: nil,
+    water_start: nil,
+    water_unit: nil
+  }
 
   defp create_monthly_invoice(_) do
     monthly_invoice = monthly_invoice_fixture()
@@ -49,7 +82,9 @@ defmodule JResidenceWeb.MonthlyInvoiceLiveTest do
     test "updates monthly_invoice in listing", %{conn: conn, monthly_invoice: monthly_invoice} do
       {:ok, index_live, _html} = live(conn, ~p"/monthly_invoices")
 
-      assert index_live |> element("#monthly_invoices-#{monthly_invoice.id} a", "Edit") |> render_click() =~
+      assert index_live
+             |> element("#monthly_invoices-#{monthly_invoice.id} a", "Edit")
+             |> render_click() =~
                "Edit Monthly invoice"
 
       assert_patch(index_live, ~p"/monthly_invoices/#{monthly_invoice}/edit")
@@ -72,7 +107,10 @@ defmodule JResidenceWeb.MonthlyInvoiceLiveTest do
     test "deletes monthly_invoice in listing", %{conn: conn, monthly_invoice: monthly_invoice} do
       {:ok, index_live, _html} = live(conn, ~p"/monthly_invoices")
 
-      assert index_live |> element("#monthly_invoices-#{monthly_invoice.id} a", "Delete") |> render_click()
+      assert index_live
+             |> element("#monthly_invoices-#{monthly_invoice.id} a", "Delete")
+             |> render_click()
+
       refute has_element?(index_live, "#monthly_invoices-#{monthly_invoice.id}")
     end
   end

@@ -1,0 +1,51 @@
+<.header>
+  Listing Monthly contract fees
+  <:actions>
+    <.link patch={~p"/monthly_contract_fees/new"}>
+      <.button>New Monthly contract fee</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table
+  id="monthly_contract_fees"
+  rows={@streams.monthly_contract_fees}
+  row_click={fn {_id, monthly_contract_fee} -> JS.navigate(~p"/monthly_contract_fees/#{monthly_contract_fee}") end}
+>
+  <:col :let={{_id, monthly_contract_fee}} label="Deposit"><%= monthly_contract_fee.deposit %></:col>
+  <:col :let={{_id, monthly_contract_fee}} label="Advance payment"><%= monthly_contract_fee.advance_payment %></:col>
+  <:col :let={{_id, monthly_contract_fee}} label="Keycard fees"><%= monthly_contract_fee.keycard_fees %></:col>
+  <:col :let={{_id, monthly_contract_fee}} label="Other labels"><%= monthly_contract_fee.other_labels %></:col>
+  <:col :let={{_id, monthly_contract_fee}} label="Other fees"><%= monthly_contract_fee.other_fees %></:col>
+  <:col :let={{_id, monthly_contract_fee}} label="Total"><%= monthly_contract_fee.total %></:col>
+  <:action :let={{_id, monthly_contract_fee}}>
+    <div class="sr-only">
+      <.link navigate={~p"/monthly_contract_fees/#{monthly_contract_fee}"}>Show</.link>
+    </div>
+    <.link patch={~p"/monthly_contract_fees/#{monthly_contract_fee}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={{id, monthly_contract_fee}}>
+    <.link
+      phx-click={JS.push("delete", value: %{id: monthly_contract_fee.id}) |> hide("##{id}")}
+      data-confirm="Are you sure?"
+    >
+      Delete
+    </.link>
+  </:action>
+</.table>
+
+<.modal
+  :if={@live_action in [:new, :edit]}
+  id="monthly_contract_fee-modal"
+  show
+  on_cancel={JS.navigate(~p"/monthly_contract_fees")}
+>
+  <.live_component
+    module={JResidenceWeb.MonthlyContractFeeLive.FormComponent}
+    id={@monthly_contract_fee.id || :new}
+    title={@page_title}
+    action={@live_action}
+    monthly_contract_fee={@monthly_contract_fee}
+    patch={~p"/monthly_contract_fees"}
+  />
+</.modal>

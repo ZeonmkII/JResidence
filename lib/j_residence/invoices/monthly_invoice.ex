@@ -7,7 +7,7 @@ defmodule JResidence.Invoices.MonthlyInvoice do
   @foreign_key_type :binary_id
   schema "monthly_invoices" do
     field :bill_cycle, :date
-    field :advanced_payment, :decimal
+    field :advance_payment, :decimal
     field :water_start, :decimal
     field :water_end, :decimal
     field :water_unit, :decimal
@@ -27,7 +27,7 @@ defmodule JResidence.Invoices.MonthlyInvoice do
     monthly_invoice
     |> cast(attrs, [
       :bill_cycle,
-      :advanced_payment,
+      :advance_payment,
       :water_start,
       :water_end,
       :water_unit,
@@ -39,7 +39,7 @@ defmodule JResidence.Invoices.MonthlyInvoice do
     ])
     |> validate_required([
       :bill_cycle,
-      :advanced_payment,
+      :advance_payment,
       :water_start,
       :water_end,
       :water_unit,
