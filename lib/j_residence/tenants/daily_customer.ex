@@ -1,5 +1,6 @@
 defmodule JResidence.Tenants.DailyCustomer do
   alias JResidence.Tenants.Customer
+  alias JResidence.Bookings.{DailyCheckIn, DailyBooking}
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -9,6 +10,9 @@ defmodule JResidence.Tenants.DailyCustomer do
     field :b_current, :string
 
     belongs_to :customer, Customer
+
+    has_many :daily_bookings, DailyBooking
+    has_many :daily_check_ins, DailyCheckIn
 
     timestamps()
   end

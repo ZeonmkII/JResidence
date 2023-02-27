@@ -1,0 +1,39 @@
+<.header>
+  Monthly booking <%= @monthly_booking.id %>
+  <:subtitle>This is a monthly_booking record from your database.</:subtitle>
+  <:actions>
+    <.link patch={~p"/monthly_bookings/#{@monthly_booking}/show/edit"} phx-click={JS.push_focus()}>
+      <.button>Edit monthly_booking</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Check in"><%= @monthly_booking.check_in %></:item>
+  <:item title="Check out"><%= @monthly_booking.check_out %></:item>
+  <:item title="Duration month"><%= @monthly_booking.duration_month %></:item>
+  <:item title="Duration day"><%= @monthly_booking.duration_day %></:item>
+  <:item title="Remarks"><%= @monthly_booking.remarks %></:item>
+  <:item title="Rent fees"><%= @monthly_booking.rent_fees %></:item>
+  <:item title="Service fees"><%= @monthly_booking.service_fees %></:item>
+  <:item title="Deposit"><%= @monthly_booking.deposit %></:item>
+  <:item title="Advance payment"><%= @monthly_booking.advance_payment %></:item>
+  <:item title="Keycard fees"><%= @monthly_booking.keycard_fees %></:item>
+  <:item title="Other labels"><%= @monthly_booking.other_labels %></:item>
+  <:item title="Other fees"><%= @monthly_booking.other_fees %></:item>
+  <:item title="Remaining"><%= @monthly_booking.remaining %></:item>
+  <:item title="Total"><%= @monthly_booking.total %></:item>
+</.list>
+
+<.back navigate={~p"/monthly_bookings"}>Back to monthly_bookings</.back>
+
+<.modal :if={@live_action == :edit} id="monthly_booking-modal" show on_cancel={JS.patch(~p"/monthly_bookings/#{@monthly_booking}")}>
+  <.live_component
+    module={JResidenceWeb.MonthlyBookingLive.FormComponent}
+    id={@monthly_booking.id}
+    title={@page_title}
+    action={@live_action}
+    monthly_booking={@monthly_booking}
+    patch={~p"/monthly_bookings/#{@monthly_booking}"}
+  />
+</.modal>

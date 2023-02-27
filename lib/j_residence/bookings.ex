@@ -197,4 +197,100 @@ defmodule JResidence.Bookings do
   def change_daily_check_in(%DailyCheckIn{} = daily_check_in, attrs \\ %{}) do
     DailyCheckIn.changeset(daily_check_in, attrs)
   end
+
+  alias JResidence.Bookings.MonthlyBooking
+
+  @doc """
+  Returns the list of monthly_bookings.
+
+  ## Examples
+
+      iex> list_monthly_bookings()
+      [%MonthlyBooking{}, ...]
+
+  """
+  def list_monthly_bookings do
+    Repo.all(MonthlyBooking)
+  end
+
+  @doc """
+  Gets a single monthly_booking.
+
+  Raises `Ecto.NoResultsError` if the Monthly booking does not exist.
+
+  ## Examples
+
+      iex> get_monthly_booking!(123)
+      %MonthlyBooking{}
+
+      iex> get_monthly_booking!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_monthly_booking!(id), do: Repo.get!(MonthlyBooking, id)
+
+  @doc """
+  Creates a monthly_booking.
+
+  ## Examples
+
+      iex> create_monthly_booking(%{field: value})
+      {:ok, %MonthlyBooking{}}
+
+      iex> create_monthly_booking(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_monthly_booking(attrs \\ %{}) do
+    %MonthlyBooking{}
+    |> MonthlyBooking.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a monthly_booking.
+
+  ## Examples
+
+      iex> update_monthly_booking(monthly_booking, %{field: new_value})
+      {:ok, %MonthlyBooking{}}
+
+      iex> update_monthly_booking(monthly_booking, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_monthly_booking(%MonthlyBooking{} = monthly_booking, attrs) do
+    monthly_booking
+    |> MonthlyBooking.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a monthly_booking.
+
+  ## Examples
+
+      iex> delete_monthly_booking(monthly_booking)
+      {:ok, %MonthlyBooking{}}
+
+      iex> delete_monthly_booking(monthly_booking)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_monthly_booking(%MonthlyBooking{} = monthly_booking) do
+    Repo.delete(monthly_booking)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking monthly_booking changes.
+
+  ## Examples
+
+      iex> change_monthly_booking(monthly_booking)
+      %Ecto.Changeset{data: %MonthlyBooking{}}
+
+  """
+  def change_monthly_booking(%MonthlyBooking{} = monthly_booking, attrs \\ %{}) do
+    MonthlyBooking.changeset(monthly_booking, attrs)
+  end
 end

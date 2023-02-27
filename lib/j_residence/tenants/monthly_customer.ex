@@ -1,4 +1,5 @@
 defmodule JResidence.Tenants.MonthlyCustomer do
+  alias JResidence.Bookings.MonthlyBooking
   alias JResidence.Tenants.Customer
   use Ecto.Schema
   import Ecto.Changeset
@@ -11,6 +12,8 @@ defmodule JResidence.Tenants.MonthlyCustomer do
     field :b_tenant, :string
 
     belongs_to :customer, Customer
+
+    has_many :monthly_bookings, MonthlyBooking
 
     timestamps()
   end

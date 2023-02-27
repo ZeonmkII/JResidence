@@ -1,0 +1,59 @@
+<.header>
+  Listing Monthly bookings
+  <:actions>
+    <.link patch={~p"/monthly_bookings/new"}>
+      <.button>New Monthly booking</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table
+  id="monthly_bookings"
+  rows={@streams.monthly_bookings}
+  row_click={fn {_id, monthly_booking} -> JS.navigate(~p"/monthly_bookings/#{monthly_booking}") end}
+>
+  <:col :let={{_id, monthly_booking}} label="Check in"><%= monthly_booking.check_in %></:col>
+  <:col :let={{_id, monthly_booking}} label="Check out"><%= monthly_booking.check_out %></:col>
+  <:col :let={{_id, monthly_booking}} label="Duration month"><%= monthly_booking.duration_month %></:col>
+  <:col :let={{_id, monthly_booking}} label="Duration day"><%= monthly_booking.duration_day %></:col>
+  <:col :let={{_id, monthly_booking}} label="Remarks"><%= monthly_booking.remarks %></:col>
+  <:col :let={{_id, monthly_booking}} label="Rent fees"><%= monthly_booking.rent_fees %></:col>
+  <:col :let={{_id, monthly_booking}} label="Service fees"><%= monthly_booking.service_fees %></:col>
+  <:col :let={{_id, monthly_booking}} label="Deposit"><%= monthly_booking.deposit %></:col>
+  <:col :let={{_id, monthly_booking}} label="Advance payment"><%= monthly_booking.advance_payment %></:col>
+  <:col :let={{_id, monthly_booking}} label="Keycard fees"><%= monthly_booking.keycard_fees %></:col>
+  <:col :let={{_id, monthly_booking}} label="Other labels"><%= monthly_booking.other_labels %></:col>
+  <:col :let={{_id, monthly_booking}} label="Other fees"><%= monthly_booking.other_fees %></:col>
+  <:col :let={{_id, monthly_booking}} label="Remaining"><%= monthly_booking.remaining %></:col>
+  <:col :let={{_id, monthly_booking}} label="Total"><%= monthly_booking.total %></:col>
+  <:action :let={{_id, monthly_booking}}>
+    <div class="sr-only">
+      <.link navigate={~p"/monthly_bookings/#{monthly_booking}"}>Show</.link>
+    </div>
+    <.link patch={~p"/monthly_bookings/#{monthly_booking}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={{id, monthly_booking}}>
+    <.link
+      phx-click={JS.push("delete", value: %{id: monthly_booking.id}) |> hide("##{id}")}
+      data-confirm="Are you sure?"
+    >
+      Delete
+    </.link>
+  </:action>
+</.table>
+
+<.modal
+  :if={@live_action in [:new, :edit]}
+  id="monthly_booking-modal"
+  show
+  on_cancel={JS.navigate(~p"/monthly_bookings")}
+>
+  <.live_component
+    module={JResidenceWeb.MonthlyBookingLive.FormComponent}
+    id={@monthly_booking.id || :new}
+    title={@page_title}
+    action={@live_action}
+    monthly_booking={@monthly_booking}
+    patch={~p"/monthly_bookings"}
+  />
+</.modal>
