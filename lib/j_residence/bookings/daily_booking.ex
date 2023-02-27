@@ -1,6 +1,7 @@
 defmodule JResidence.Bookings.DailyBooking do
   alias JResidence.Facilities.Room
   alias JResidence.Tenants.DailyCustomer
+  alias JResidence.Bookings.DailyCheckIn
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -14,6 +15,8 @@ defmodule JResidence.Bookings.DailyBooking do
 
     belongs_to :daily_customer, DailyCustomer
     belongs_to :room, Room
+
+    has_one :daily_check_in, DailyCheckIn
 
     timestamps()
   end

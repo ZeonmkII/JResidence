@@ -20,4 +20,27 @@ defmodule JResidence.BookingsFixtures do
 
     daily_booking
   end
+
+  @doc """
+  Generate a daily_check_in.
+  """
+  def daily_check_in_fixture(attrs \\ %{}) do
+    {:ok, daily_check_in} =
+      attrs
+      |> Enum.into(%{
+        check_in: ~D[2023-02-26],
+        check_out: ~D[2023-02-26],
+        deposit: "120.5",
+        duration_day: 42,
+        from: "some from",
+        remarks: "some remarks",
+        room_number: "some room_number",
+        time_in: ~T[14:00:00],
+        time_out: ~T[14:00:00],
+        to: "some to"
+      })
+      |> JResidence.Bookings.create_daily_check_in()
+
+    daily_check_in
+  end
 end

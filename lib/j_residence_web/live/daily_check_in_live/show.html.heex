@@ -1,0 +1,35 @@
+<.header>
+  Daily check in <%= @daily_check_in.id %>
+  <:subtitle>This is a daily_check_in record from your database.</:subtitle>
+  <:actions>
+    <.link patch={~p"/daily_check_ins/#{@daily_check_in}/show/edit"} phx-click={JS.push_focus()}>
+      <.button>Edit daily_check_in</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Check in"><%= @daily_check_in.check_in %></:item>
+  <:item title="Check out"><%= @daily_check_in.check_out %></:item>
+  <:item title="Time in"><%= @daily_check_in.time_in %></:item>
+  <:item title="Time out"><%= @daily_check_in.time_out %></:item>
+  <:item title="Duration day"><%= @daily_check_in.duration_day %></:item>
+  <:item title="Room number"><%= @daily_check_in.room_number %></:item>
+  <:item title="Deposit"><%= @daily_check_in.deposit %></:item>
+  <:item title="From"><%= @daily_check_in.from %></:item>
+  <:item title="To"><%= @daily_check_in.to %></:item>
+  <:item title="Remarks"><%= @daily_check_in.remarks %></:item>
+</.list>
+
+<.back navigate={~p"/daily_check_ins"}>Back to daily_check_ins</.back>
+
+<.modal :if={@live_action == :edit} id="daily_check_in-modal" show on_cancel={JS.patch(~p"/daily_check_ins/#{@daily_check_in}")}>
+  <.live_component
+    module={JResidenceWeb.DailyCheckInLive.FormComponent}
+    id={@daily_check_in.id}
+    title={@page_title}
+    action={@live_action}
+    daily_check_in={@daily_check_in}
+    patch={~p"/daily_check_ins/#{@daily_check_in}"}
+  />
+</.modal>

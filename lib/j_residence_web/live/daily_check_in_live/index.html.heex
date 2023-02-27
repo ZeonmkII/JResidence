@@ -1,0 +1,55 @@
+<.header>
+  Listing Daily check ins
+  <:actions>
+    <.link patch={~p"/daily_check_ins/new"}>
+      <.button>New Daily check in</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table
+  id="daily_check_ins"
+  rows={@streams.daily_check_ins}
+  row_click={fn {_id, daily_check_in} -> JS.navigate(~p"/daily_check_ins/#{daily_check_in}") end}
+>
+  <:col :let={{_id, daily_check_in}} label="Check in"><%= daily_check_in.check_in %></:col>
+  <:col :let={{_id, daily_check_in}} label="Check out"><%= daily_check_in.check_out %></:col>
+  <:col :let={{_id, daily_check_in}} label="Time in"><%= daily_check_in.time_in %></:col>
+  <:col :let={{_id, daily_check_in}} label="Time out"><%= daily_check_in.time_out %></:col>
+  <:col :let={{_id, daily_check_in}} label="Duration day"><%= daily_check_in.duration_day %></:col>
+  <:col :let={{_id, daily_check_in}} label="Room number"><%= daily_check_in.room_number %></:col>
+  <:col :let={{_id, daily_check_in}} label="Deposit"><%= daily_check_in.deposit %></:col>
+  <:col :let={{_id, daily_check_in}} label="From"><%= daily_check_in.from %></:col>
+  <:col :let={{_id, daily_check_in}} label="To"><%= daily_check_in.to %></:col>
+  <:col :let={{_id, daily_check_in}} label="Remarks"><%= daily_check_in.remarks %></:col>
+  <:action :let={{_id, daily_check_in}}>
+    <div class="sr-only">
+      <.link navigate={~p"/daily_check_ins/#{daily_check_in}"}>Show</.link>
+    </div>
+    <.link patch={~p"/daily_check_ins/#{daily_check_in}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={{id, daily_check_in}}>
+    <.link
+      phx-click={JS.push("delete", value: %{id: daily_check_in.id}) |> hide("##{id}")}
+      data-confirm="Are you sure?"
+    >
+      Delete
+    </.link>
+  </:action>
+</.table>
+
+<.modal
+  :if={@live_action in [:new, :edit]}
+  id="daily_check_in-modal"
+  show
+  on_cancel={JS.navigate(~p"/daily_check_ins")}
+>
+  <.live_component
+    module={JResidenceWeb.DailyCheckInLive.FormComponent}
+    id={@daily_check_in.id || :new}
+    title={@page_title}
+    action={@live_action}
+    daily_check_in={@daily_check_in}
+    patch={~p"/daily_check_ins"}
+  />
+</.modal>
