@@ -148,4 +148,58 @@ defmodule JResidence.TenantsTest do
       assert %Ecto.Changeset{} = Tenants.change_customer(customer)
     end
   end
+
+  describe "daily_customers" do
+    alias JResidence.Tenants.DailyCustomer
+
+    import JResidence.TenantsFixtures
+
+    @invalid_attrs %{b_current: nil}
+
+    test "list_daily_customers/0 returns all daily_customers" do
+      daily_customer = daily_customer_fixture()
+      assert Tenants.list_daily_customers() == [daily_customer]
+    end
+
+    test "get_daily_customer!/1 returns the daily_customer with given id" do
+      daily_customer = daily_customer_fixture()
+      assert Tenants.get_daily_customer!(daily_customer.id) == daily_customer
+    end
+
+    test "create_daily_customer/1 with valid data creates a daily_customer" do
+      valid_attrs = %{b_current: "some b_current"}
+
+      assert {:ok, %DailyCustomer{} = daily_customer} = Tenants.create_daily_customer(valid_attrs)
+      assert daily_customer.b_current == "some b_current"
+    end
+
+    test "create_daily_customer/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Tenants.create_daily_customer(@invalid_attrs)
+    end
+
+    test "update_daily_customer/2 with valid data updates the daily_customer" do
+      daily_customer = daily_customer_fixture()
+      update_attrs = %{b_current: "some updated b_current"}
+
+      assert {:ok, %DailyCustomer{} = daily_customer} = Tenants.update_daily_customer(daily_customer, update_attrs)
+      assert daily_customer.b_current == "some updated b_current"
+    end
+
+    test "update_daily_customer/2 with invalid data returns error changeset" do
+      daily_customer = daily_customer_fixture()
+      assert {:error, %Ecto.Changeset{}} = Tenants.update_daily_customer(daily_customer, @invalid_attrs)
+      assert daily_customer == Tenants.get_daily_customer!(daily_customer.id)
+    end
+
+    test "delete_daily_customer/1 deletes the daily_customer" do
+      daily_customer = daily_customer_fixture()
+      assert {:ok, %DailyCustomer{}} = Tenants.delete_daily_customer(daily_customer)
+      assert_raise Ecto.NoResultsError, fn -> Tenants.get_daily_customer!(daily_customer.id) end
+    end
+
+    test "change_daily_customer/1 returns a daily_customer changeset" do
+      daily_customer = daily_customer_fixture()
+      assert %Ecto.Changeset{} = Tenants.change_daily_customer(daily_customer)
+    end
+  end
 end

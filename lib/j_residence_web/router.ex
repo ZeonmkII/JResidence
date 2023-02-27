@@ -29,6 +29,14 @@ defmodule JResidenceWeb.Router do
 
     live "/customers/:id", CustomerLive.Show, :show
     live "/customers/:id/show/edit", CustomerLive.Show, :edit
+
+    # Tenants / Daily Customer
+    live "/daily_customers", DailyCustomerLive.Index, :index
+    live "/daily_customers/new", DailyCustomerLive.Index, :new
+    live "/daily_customers/:id/edit", DailyCustomerLive.Index, :edit
+
+    live "/daily_customers/:id", DailyCustomerLive.Show, :show
+    live "/daily_customers/:id/show/edit", DailyCustomerLive.Show, :edit
   end
 
   # Other scopes may use custom stacks.

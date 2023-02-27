@@ -1,0 +1,46 @@
+<.header>
+  Listing Daily customers
+  <:actions>
+    <.link patch={~p"/daily_customers/new"}>
+      <.button>New Daily customer</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table
+  id="daily_customers"
+  rows={@streams.daily_customers}
+  row_click={fn {_id, daily_customer} -> JS.navigate(~p"/daily_customers/#{daily_customer}") end}
+>
+  <:col :let={{_id, daily_customer}} label="B current"><%= daily_customer.b_current %></:col>
+  <:action :let={{_id, daily_customer}}>
+    <div class="sr-only">
+      <.link navigate={~p"/daily_customers/#{daily_customer}"}>Show</.link>
+    </div>
+    <.link patch={~p"/daily_customers/#{daily_customer}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={{id, daily_customer}}>
+    <.link
+      phx-click={JS.push("delete", value: %{id: daily_customer.id}) |> hide("##{id}")}
+      data-confirm="Are you sure?"
+    >
+      Delete
+    </.link>
+  </:action>
+</.table>
+
+<.modal
+  :if={@live_action in [:new, :edit]}
+  id="daily_customer-modal"
+  show
+  on_cancel={JS.navigate(~p"/daily_customers")}
+>
+  <.live_component
+    module={JResidenceWeb.DailyCustomerLive.FormComponent}
+    id={@daily_customer.id || :new}
+    title={@page_title}
+    action={@live_action}
+    daily_customer={@daily_customer}
+    patch={~p"/daily_customers"}
+  />
+</.modal>

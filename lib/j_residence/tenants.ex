@@ -101,4 +101,100 @@ defmodule JResidence.Tenants do
   def change_customer(%Customer{} = customer, attrs \\ %{}) do
     Customer.changeset(customer, attrs)
   end
+
+  alias JResidence.Tenants.DailyCustomer
+
+  @doc """
+  Returns the list of daily_customers.
+
+  ## Examples
+
+      iex> list_daily_customers()
+      [%DailyCustomer{}, ...]
+
+  """
+  def list_daily_customers do
+    Repo.all(DailyCustomer)
+  end
+
+  @doc """
+  Gets a single daily_customer.
+
+  Raises `Ecto.NoResultsError` if the Daily customer does not exist.
+
+  ## Examples
+
+      iex> get_daily_customer!(123)
+      %DailyCustomer{}
+
+      iex> get_daily_customer!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_daily_customer!(id), do: Repo.get!(DailyCustomer, id)
+
+  @doc """
+  Creates a daily_customer.
+
+  ## Examples
+
+      iex> create_daily_customer(%{field: value})
+      {:ok, %DailyCustomer{}}
+
+      iex> create_daily_customer(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_daily_customer(attrs \\ %{}) do
+    %DailyCustomer{}
+    |> DailyCustomer.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a daily_customer.
+
+  ## Examples
+
+      iex> update_daily_customer(daily_customer, %{field: new_value})
+      {:ok, %DailyCustomer{}}
+
+      iex> update_daily_customer(daily_customer, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_daily_customer(%DailyCustomer{} = daily_customer, attrs) do
+    daily_customer
+    |> DailyCustomer.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a daily_customer.
+
+  ## Examples
+
+      iex> delete_daily_customer(daily_customer)
+      {:ok, %DailyCustomer{}}
+
+      iex> delete_daily_customer(daily_customer)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_daily_customer(%DailyCustomer{} = daily_customer) do
+    Repo.delete(daily_customer)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking daily_customer changes.
+
+  ## Examples
+
+      iex> change_daily_customer(daily_customer)
+      %Ecto.Changeset{data: %DailyCustomer{}}
+
+  """
+  def change_daily_customer(%DailyCustomer{} = daily_customer, attrs \\ %{}) do
+    DailyCustomer.changeset(daily_customer, attrs)
+  end
 end

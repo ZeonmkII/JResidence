@@ -1,0 +1,26 @@
+<.header>
+  Daily customer <%= @daily_customer.id %>
+  <:subtitle>This is a daily_customer record from your database.</:subtitle>
+  <:actions>
+    <.link patch={~p"/daily_customers/#{@daily_customer}/show/edit"} phx-click={JS.push_focus()}>
+      <.button>Edit daily_customer</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="B current"><%= @daily_customer.b_current %></:item>
+</.list>
+
+<.back navigate={~p"/daily_customers"}>Back to daily_customers</.back>
+
+<.modal :if={@live_action == :edit} id="daily_customer-modal" show on_cancel={JS.patch(~p"/daily_customers/#{@daily_customer}")}>
+  <.live_component
+    module={JResidenceWeb.DailyCustomerLive.FormComponent}
+    id={@daily_customer.id}
+    title={@page_title}
+    action={@live_action}
+    daily_customer={@daily_customer}
+    patch={~p"/daily_customers/#{@daily_customer}"}
+  />
+</.modal>
