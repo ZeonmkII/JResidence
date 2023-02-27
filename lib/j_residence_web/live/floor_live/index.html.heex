@@ -1,0 +1,46 @@
+<.header>
+  Listing Floors
+  <:actions>
+    <.link patch={~p"/floors/new"}>
+      <.button>New Floor</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table
+  id="floors"
+  rows={@streams.floors}
+  row_click={fn {_id, floor} -> JS.navigate(~p"/floors/#{floor}") end}
+>
+  <:col :let={{_id, floor}} label="Floor number"><%= floor.floor_number %></:col>
+  <:action :let={{_id, floor}}>
+    <div class="sr-only">
+      <.link navigate={~p"/floors/#{floor}"}>Show</.link>
+    </div>
+    <.link patch={~p"/floors/#{floor}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={{id, floor}}>
+    <.link
+      phx-click={JS.push("delete", value: %{id: floor.id}) |> hide("##{id}")}
+      data-confirm="Are you sure?"
+    >
+      Delete
+    </.link>
+  </:action>
+</.table>
+
+<.modal
+  :if={@live_action in [:new, :edit]}
+  id="floor-modal"
+  show
+  on_cancel={JS.navigate(~p"/floors")}
+>
+  <.live_component
+    module={JResidenceWeb.FloorLive.FormComponent}
+    id={@floor.id || :new}
+    title={@page_title}
+    action={@live_action}
+    floor={@floor}
+    patch={~p"/floors"}
+  />
+</.modal>

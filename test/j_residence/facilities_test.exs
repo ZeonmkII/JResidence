@@ -70,4 +70,58 @@ defmodule JResidence.FacilitiesTest do
       assert %Ecto.Changeset{} = Facilities.change_building(building)
     end
   end
+
+  describe "floors" do
+    alias JResidence.Facilities.Floor
+
+    import JResidence.FacilitiesFixtures
+
+    @invalid_attrs %{floor_number: nil}
+
+    test "list_floors/0 returns all floors" do
+      floor = floor_fixture()
+      assert Facilities.list_floors() == [floor]
+    end
+
+    test "get_floor!/1 returns the floor with given id" do
+      floor = floor_fixture()
+      assert Facilities.get_floor!(floor.id) == floor
+    end
+
+    test "create_floor/1 with valid data creates a floor" do
+      valid_attrs = %{floor_number: "some floor_number"}
+
+      assert {:ok, %Floor{} = floor} = Facilities.create_floor(valid_attrs)
+      assert floor.floor_number == "some floor_number"
+    end
+
+    test "create_floor/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Facilities.create_floor(@invalid_attrs)
+    end
+
+    test "update_floor/2 with valid data updates the floor" do
+      floor = floor_fixture()
+      update_attrs = %{floor_number: "some updated floor_number"}
+
+      assert {:ok, %Floor{} = floor} = Facilities.update_floor(floor, update_attrs)
+      assert floor.floor_number == "some updated floor_number"
+    end
+
+    test "update_floor/2 with invalid data returns error changeset" do
+      floor = floor_fixture()
+      assert {:error, %Ecto.Changeset{}} = Facilities.update_floor(floor, @invalid_attrs)
+      assert floor == Facilities.get_floor!(floor.id)
+    end
+
+    test "delete_floor/1 deletes the floor" do
+      floor = floor_fixture()
+      assert {:ok, %Floor{}} = Facilities.delete_floor(floor)
+      assert_raise Ecto.NoResultsError, fn -> Facilities.get_floor!(floor.id) end
+    end
+
+    test "change_floor/1 returns a floor changeset" do
+      floor = floor_fixture()
+      assert %Ecto.Changeset{} = Facilities.change_floor(floor)
+    end
+  end
 end

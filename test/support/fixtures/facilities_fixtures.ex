@@ -24,4 +24,18 @@ defmodule JResidence.FacilitiesFixtures do
 
     building
   end
+
+  @doc """
+  Generate a floor.
+  """
+  def floor_fixture(attrs \\ %{}) do
+    {:ok, floor} =
+      attrs
+      |> Enum.into(%{
+        floor_number: "some floor_number"
+      })
+      |> JResidence.Facilities.create_floor()
+
+    floor
+  end
 end

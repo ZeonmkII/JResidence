@@ -1,0 +1,26 @@
+<.header>
+  Floor <%= @floor.id %>
+  <:subtitle>This is a floor record from your database.</:subtitle>
+  <:actions>
+    <.link patch={~p"/floors/#{@floor}/show/edit"} phx-click={JS.push_focus()}>
+      <.button>Edit floor</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Floor number"><%= @floor.floor_number %></:item>
+</.list>
+
+<.back navigate={~p"/floors"}>Back to floors</.back>
+
+<.modal :if={@live_action == :edit} id="floor-modal" show on_cancel={JS.patch(~p"/floors/#{@floor}")}>
+  <.live_component
+    module={JResidenceWeb.FloorLive.FormComponent}
+    id={@floor.id}
+    title={@page_title}
+    action={@live_action}
+    floor={@floor}
+    patch={~p"/floors/#{@floor}"}
+  />
+</.modal>
