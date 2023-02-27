@@ -1,0 +1,53 @@
+<.header>
+  Listing Buildings
+  <:actions>
+    <.link patch={~p"/buildings/new"}>
+      <.button>New Building</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table
+  id="buildings"
+  rows={@streams.buildings}
+  row_click={fn {_id, building} -> JS.navigate(~p"/buildings/#{building}") end}
+>
+  <:col :let={{_id, building}} label="Name"><%= building.name %></:col>
+  <:col :let={{_id, building}} label="Address"><%= building.address %></:col>
+  <:col :let={{_id, building}} label="Tax"><%= building.tax_id %></:col>
+  <:col :let={{_id, building}} label="Phone"><%= building.phone %></:col>
+  <:col :let={{_id, building}} label="Calc type water"><%= building.calc_type_water %></:col>
+  <:col :let={{_id, building}} label="Calc type electric"><%= building.calc_type_electric %></:col>
+  <:col :let={{_id, building}} label="Unit price water"><%= building.unit_price_water %></:col>
+  <:col :let={{_id, building}} label="Unit price eletric"><%= building.unit_price_eletric %></:col>
+  <:action :let={{_id, building}}>
+    <div class="sr-only">
+      <.link navigate={~p"/buildings/#{building}"}>Show</.link>
+    </div>
+    <.link patch={~p"/buildings/#{building}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={{id, building}}>
+    <.link
+      phx-click={JS.push("delete", value: %{id: building.id}) |> hide("##{id}")}
+      data-confirm="Are you sure?"
+    >
+      Delete
+    </.link>
+  </:action>
+</.table>
+
+<.modal
+  :if={@live_action in [:new, :edit]}
+  id="building-modal"
+  show
+  on_cancel={JS.navigate(~p"/buildings")}
+>
+  <.live_component
+    module={JResidenceWeb.BuildingLive.FormComponent}
+    id={@building.id || :new}
+    title={@page_title}
+    action={@live_action}
+    building={@building}
+    patch={~p"/buildings"}
+  />
+</.modal>

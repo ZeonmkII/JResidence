@@ -1,0 +1,33 @@
+<.header>
+  Building <%= @building.id %>
+  <:subtitle>This is a building record from your database.</:subtitle>
+  <:actions>
+    <.link patch={~p"/buildings/#{@building}/show/edit"} phx-click={JS.push_focus()}>
+      <.button>Edit building</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Name"><%= @building.name %></:item>
+  <:item title="Address"><%= @building.address %></:item>
+  <:item title="Tax"><%= @building.tax_id %></:item>
+  <:item title="Phone"><%= @building.phone %></:item>
+  <:item title="Calc type water"><%= @building.calc_type_water %></:item>
+  <:item title="Calc type electric"><%= @building.calc_type_electric %></:item>
+  <:item title="Unit price water"><%= @building.unit_price_water %></:item>
+  <:item title="Unit price eletric"><%= @building.unit_price_eletric %></:item>
+</.list>
+
+<.back navigate={~p"/buildings"}>Back to buildings</.back>
+
+<.modal :if={@live_action == :edit} id="building-modal" show on_cancel={JS.patch(~p"/buildings/#{@building}")}>
+  <.live_component
+    module={JResidenceWeb.BuildingLive.FormComponent}
+    id={@building.id}
+    title={@page_title}
+    action={@live_action}
+    building={@building}
+    patch={~p"/buildings/#{@building}"}
+  />
+</.modal>
