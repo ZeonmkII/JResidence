@@ -1,0 +1,32 @@
+<.header>
+  Daily booking fee <%= @daily_booking_fee.id %>
+  <:subtitle>This is a daily_booking_fee record from your database.</:subtitle>
+  <:actions>
+    <.link patch={~p"/daily_booking_fees/#{@daily_booking_fee}/show/edit"} phx-click={JS.push_focus()}>
+      <.button>Edit daily_booking_fee</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Booking fees"><%= @daily_booking_fee.booking_fees %></:item>
+  <:item title="Deposit"><%= @daily_booking_fee.deposit %></:item>
+  <:item title="Room fees"><%= @daily_booking_fee.room_fees %></:item>
+  <:item title="Other labels"><%= @daily_booking_fee.other_labels %></:item>
+  <:item title="Other fees"><%= @daily_booking_fee.other_fees %></:item>
+  <:item title="Remaining"><%= @daily_booking_fee.remaining %></:item>
+  <:item title="Total"><%= @daily_booking_fee.total %></:item>
+</.list>
+
+<.back navigate={~p"/daily_booking_fees"}>Back to daily_booking_fees</.back>
+
+<.modal :if={@live_action == :edit} id="daily_booking_fee-modal" show on_cancel={JS.patch(~p"/daily_booking_fees/#{@daily_booking_fee}")}>
+  <.live_component
+    module={JResidenceWeb.DailyBookingFeeLive.FormComponent}
+    id={@daily_booking_fee.id}
+    title={@page_title}
+    action={@live_action}
+    daily_booking_fee={@daily_booking_fee}
+    patch={~p"/daily_booking_fees/#{@daily_booking_fee}"}
+  />
+</.modal>

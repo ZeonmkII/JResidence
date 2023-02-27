@@ -1,0 +1,52 @@
+<.header>
+  Listing Daily booking fees
+  <:actions>
+    <.link patch={~p"/daily_booking_fees/new"}>
+      <.button>New Daily booking fee</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table
+  id="daily_booking_fees"
+  rows={@streams.daily_booking_fees}
+  row_click={fn {_id, daily_booking_fee} -> JS.navigate(~p"/daily_booking_fees/#{daily_booking_fee}") end}
+>
+  <:col :let={{_id, daily_booking_fee}} label="Booking fees"><%= daily_booking_fee.booking_fees %></:col>
+  <:col :let={{_id, daily_booking_fee}} label="Deposit"><%= daily_booking_fee.deposit %></:col>
+  <:col :let={{_id, daily_booking_fee}} label="Room fees"><%= daily_booking_fee.room_fees %></:col>
+  <:col :let={{_id, daily_booking_fee}} label="Other labels"><%= daily_booking_fee.other_labels %></:col>
+  <:col :let={{_id, daily_booking_fee}} label="Other fees"><%= daily_booking_fee.other_fees %></:col>
+  <:col :let={{_id, daily_booking_fee}} label="Remaining"><%= daily_booking_fee.remaining %></:col>
+  <:col :let={{_id, daily_booking_fee}} label="Total"><%= daily_booking_fee.total %></:col>
+  <:action :let={{_id, daily_booking_fee}}>
+    <div class="sr-only">
+      <.link navigate={~p"/daily_booking_fees/#{daily_booking_fee}"}>Show</.link>
+    </div>
+    <.link patch={~p"/daily_booking_fees/#{daily_booking_fee}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={{id, daily_booking_fee}}>
+    <.link
+      phx-click={JS.push("delete", value: %{id: daily_booking_fee.id}) |> hide("##{id}")}
+      data-confirm="Are you sure?"
+    >
+      Delete
+    </.link>
+  </:action>
+</.table>
+
+<.modal
+  :if={@live_action in [:new, :edit]}
+  id="daily_booking_fee-modal"
+  show
+  on_cancel={JS.navigate(~p"/daily_booking_fees")}
+>
+  <.live_component
+    module={JResidenceWeb.DailyBookingFeeLive.FormComponent}
+    id={@daily_booking_fee.id || :new}
+    title={@page_title}
+    action={@live_action}
+    daily_booking_fee={@daily_booking_fee}
+    patch={~p"/daily_booking_fees"}
+  />
+</.modal>
