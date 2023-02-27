@@ -1,62 +1,72 @@
-defmodule JResidence.Bookings.MonthlyBooking do
-  alias JResidence.Facilities.Room
+defmodule JResidence.Bookings.MonthlyContract do
   alias JResidence.Tenants.MonthlyCustomer
-  alias JResidence.Bookings.MonthlyContract
+  alias JResidence.Facilities.Room
+  alias JResidence.Bookings.MonthlyBooking
   use Ecto.Schema
   import Ecto.Changeset
 
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
-  schema "monthly_bookings" do
+  schema "monthly_contracts" do
+    field :date_signed, :date
     field :check_in, :date
     field :check_out, :date
     field :duration_month, :integer
     field :duration_day, :integer
-    field :remarks, :string
+    field :room_number, :string
     field :rent_fees, :decimal
     field :service_fees, :decimal
     field :deposit, :decimal
     field :advance_payment, :decimal
     field :keycard_fees, :decimal
+    field :keycard_number, :string
     field :other_labels, :string
     field :other_fees, :decimal
-    field :remaining, :decimal
-    field :total, :decimal
+    field :meter_water, :decimal
+    field :meter_electric, :decimal
+    field :remarks, :string
 
     belongs_to :monthly_customer, MonthlyCustomer
+    belongs_to :monthly_booking, MonthlyBooking
     belongs_to :room, Room
-
-    has_one :monthly_contract, MonthlyContract
 
     timestamps()
   end
 
   @doc false
-  def changeset(monthly_booking, attrs) do
-    monthly_booking
+  def changeset(monthly_contract, attrs) do
+    monthly_contract
     |> cast(attrs, [
+      :date_signed,
       :check_in,
       :check_out,
       :duration_month,
       :duration_day,
-      :remarks,
+      :room_number,
       :rent_fees,
       :service_fees,
       :deposit,
       :advance_payment,
       :keycard_fees,
+      :keycard_number,
       :other_labels,
       :other_fees,
-      :remaining,
-      :total
+      :meter_water,
+      :meter_electric,
+      :remarks
     ])
     |> validate_required([
+      :date_signed,
       :check_in,
       :check_out,
+      :room_number,
       :rent_fees,
       :deposit,
       :advance_payment,
-      :keycard_fees
+      :keycard_fees,
+      :keycard_number,
+      :meter_water,
+      :meter_electric
     ])
     |> add_duration()
   end

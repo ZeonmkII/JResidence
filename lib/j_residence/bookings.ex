@@ -293,4 +293,100 @@ defmodule JResidence.Bookings do
   def change_monthly_booking(%MonthlyBooking{} = monthly_booking, attrs \\ %{}) do
     MonthlyBooking.changeset(monthly_booking, attrs)
   end
+
+  alias JResidence.Bookings.MonthlyContract
+
+  @doc """
+  Returns the list of monthly_contracts.
+
+  ## Examples
+
+      iex> list_monthly_contracts()
+      [%MonthlyContract{}, ...]
+
+  """
+  def list_monthly_contracts do
+    Repo.all(MonthlyContract)
+  end
+
+  @doc """
+  Gets a single monthly_contract.
+
+  Raises `Ecto.NoResultsError` if the Monthly contract does not exist.
+
+  ## Examples
+
+      iex> get_monthly_contract!(123)
+      %MonthlyContract{}
+
+      iex> get_monthly_contract!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_monthly_contract!(id), do: Repo.get!(MonthlyContract, id)
+
+  @doc """
+  Creates a monthly_contract.
+
+  ## Examples
+
+      iex> create_monthly_contract(%{field: value})
+      {:ok, %MonthlyContract{}}
+
+      iex> create_monthly_contract(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_monthly_contract(attrs \\ %{}) do
+    %MonthlyContract{}
+    |> MonthlyContract.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a monthly_contract.
+
+  ## Examples
+
+      iex> update_monthly_contract(monthly_contract, %{field: new_value})
+      {:ok, %MonthlyContract{}}
+
+      iex> update_monthly_contract(monthly_contract, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_monthly_contract(%MonthlyContract{} = monthly_contract, attrs) do
+    monthly_contract
+    |> MonthlyContract.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a monthly_contract.
+
+  ## Examples
+
+      iex> delete_monthly_contract(monthly_contract)
+      {:ok, %MonthlyContract{}}
+
+      iex> delete_monthly_contract(monthly_contract)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_monthly_contract(%MonthlyContract{} = monthly_contract) do
+    Repo.delete(monthly_contract)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking monthly_contract changes.
+
+  ## Examples
+
+      iex> change_monthly_contract(monthly_contract)
+      %Ecto.Changeset{data: %MonthlyContract{}}
+
+  """
+  def change_monthly_contract(%MonthlyContract{} = monthly_contract, attrs \\ %{}) do
+    MonthlyContract.changeset(monthly_contract, attrs)
+  end
 end

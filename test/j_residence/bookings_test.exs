@@ -325,4 +325,155 @@ defmodule JResidence.BookingsTest do
       assert %Ecto.Changeset{} = Bookings.change_monthly_booking(monthly_booking)
     end
   end
+
+  describe "monthly_contracts" do
+    alias JResidence.Bookings.MonthlyContract
+
+    import JResidence.BookingsFixtures
+
+    @invalid_attrs %{
+      advance_payment: nil,
+      check_in: nil,
+      check_out: nil,
+      date_signed: nil,
+      deposit: nil,
+      duration_day: nil,
+      duration_month: nil,
+      keycard_fees: nil,
+      keycard_number: nil,
+      meter_electric: nil,
+      meter_water: nil,
+      other_fees: nil,
+      other_labels: nil,
+      remarks: nil,
+      rent_fees: nil,
+      room_number: nil,
+      service_fees: nil
+    }
+
+    test "list_monthly_contracts/0 returns all monthly_contracts" do
+      monthly_contract = monthly_contract_fixture()
+      assert Bookings.list_monthly_contracts() == [monthly_contract]
+    end
+
+    test "get_monthly_contract!/1 returns the monthly_contract with given id" do
+      monthly_contract = monthly_contract_fixture()
+      assert Bookings.get_monthly_contract!(monthly_contract.id) == monthly_contract
+    end
+
+    test "create_monthly_contract/1 with valid data creates a monthly_contract" do
+      valid_attrs = %{
+        advance_payment: "120.5",
+        check_in: ~D[2023-01-18],
+        check_out: ~D[2023-01-20],
+        date_signed: ~D[2023-01-18],
+        deposit: "120.5",
+        duration_day: 2,
+        duration_month: 0,
+        keycard_fees: "120.5",
+        keycard_number: "some keycard_number",
+        meter_electric: "120.5",
+        meter_water: "120.5",
+        other_fees: "120.5",
+        other_labels: "some other_labels",
+        remarks: "some remarks",
+        rent_fees: "120.5",
+        room_number: "some room_number",
+        service_fees: "120.5"
+      }
+
+      assert {:ok, %MonthlyContract{} = monthly_contract} =
+               Bookings.create_monthly_contract(valid_attrs)
+
+      assert monthly_contract.advance_payment == Decimal.new("120.5")
+      assert monthly_contract.check_in == ~D[2023-01-18]
+      assert monthly_contract.check_out == ~D[2023-01-20]
+      assert monthly_contract.date_signed == ~D[2023-01-18]
+      assert monthly_contract.deposit == Decimal.new("120.5")
+      assert monthly_contract.duration_day == 2
+      assert monthly_contract.duration_month == 0
+      assert monthly_contract.keycard_fees == Decimal.new("120.5")
+      assert monthly_contract.keycard_number == "some keycard_number"
+      assert monthly_contract.meter_electric == Decimal.new("120.5")
+      assert monthly_contract.meter_water == Decimal.new("120.5")
+      assert monthly_contract.other_fees == Decimal.new("120.5")
+      assert monthly_contract.other_labels == "some other_labels"
+      assert monthly_contract.remarks == "some remarks"
+      assert monthly_contract.rent_fees == Decimal.new("120.5")
+      assert monthly_contract.room_number == "some room_number"
+      assert monthly_contract.service_fees == Decimal.new("120.5")
+    end
+
+    test "create_monthly_contract/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Bookings.create_monthly_contract(@invalid_attrs)
+    end
+
+    test "update_monthly_contract/2 with valid data updates the monthly_contract" do
+      monthly_contract = monthly_contract_fixture()
+
+      update_attrs = %{
+        advance_payment: "456.7",
+        check_in: ~D[2023-01-10],
+        check_out: ~D[2023-01-19],
+        date_signed: ~D[2023-01-19],
+        deposit: "456.7",
+        duration_day: 9,
+        duration_month: 0,
+        keycard_fees: "456.7",
+        keycard_number: "some updated keycard_number",
+        meter_electric: "456.7",
+        meter_water: "456.7",
+        other_fees: "456.7",
+        other_labels: "some updated other_labels",
+        remarks: "some updated remarks",
+        rent_fees: "456.7",
+        room_number: "some updated room_number",
+        service_fees: "456.7"
+      }
+
+      assert {:ok, %MonthlyContract{} = monthly_contract} =
+               Bookings.update_monthly_contract(monthly_contract, update_attrs)
+
+      assert monthly_contract.advance_payment == Decimal.new("456.7")
+      assert monthly_contract.check_in == ~D[2023-01-10]
+      assert monthly_contract.check_out == ~D[2023-01-19]
+      assert monthly_contract.date_signed == ~D[2023-01-19]
+      assert monthly_contract.deposit == Decimal.new("456.7")
+      assert monthly_contract.duration_day == 9
+      assert monthly_contract.duration_month == 0
+      assert monthly_contract.keycard_fees == Decimal.new("456.7")
+      assert monthly_contract.keycard_number == "some updated keycard_number"
+      assert monthly_contract.meter_electric == Decimal.new("456.7")
+      assert monthly_contract.meter_water == Decimal.new("456.7")
+      assert monthly_contract.other_fees == Decimal.new("456.7")
+      assert monthly_contract.other_labels == "some updated other_labels"
+      assert monthly_contract.remarks == "some updated remarks"
+      assert monthly_contract.rent_fees == Decimal.new("456.7")
+      assert monthly_contract.room_number == "some updated room_number"
+      assert monthly_contract.service_fees == Decimal.new("456.7")
+    end
+
+    test "update_monthly_contract/2 with invalid data returns error changeset" do
+      monthly_contract = monthly_contract_fixture()
+
+      assert {:error, %Ecto.Changeset{}} =
+               Bookings.update_monthly_contract(monthly_contract, @invalid_attrs)
+
+      assert monthly_contract == Bookings.get_monthly_contract!(monthly_contract.id)
+    end
+
+    test "delete_monthly_contract/1 deletes the monthly_contract" do
+      monthly_contract = monthly_contract_fixture()
+      assert {:ok, %MonthlyContract{}} = Bookings.delete_monthly_contract(monthly_contract)
+
+      assert_raise Ecto.NoResultsError, fn ->
+        Bookings.get_monthly_contract!(monthly_contract.id)
+      end
+    end
+
+    test "change_monthly_contract/1 returns a monthly_contract changeset" do
+      monthly_contract = monthly_contract_fixture()
+      assert %Ecto.Changeset{} = Bookings.change_monthly_contract(monthly_contract)
+    end
+  end
 end

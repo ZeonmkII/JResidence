@@ -1,0 +1,62 @@
+<.header>
+  Listing Monthly contracts
+  <:actions>
+    <.link patch={~p"/monthly_contracts/new"}>
+      <.button>New Monthly contract</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table
+  id="monthly_contracts"
+  rows={@streams.monthly_contracts}
+  row_click={fn {_id, monthly_contract} -> JS.navigate(~p"/monthly_contracts/#{monthly_contract}") end}
+>
+  <:col :let={{_id, monthly_contract}} label="Date signed"><%= monthly_contract.date_signed %></:col>
+  <:col :let={{_id, monthly_contract}} label="Check in"><%= monthly_contract.check_in %></:col>
+  <:col :let={{_id, monthly_contract}} label="Check out"><%= monthly_contract.check_out %></:col>
+  <:col :let={{_id, monthly_contract}} label="Duration month"><%= monthly_contract.duration_month %></:col>
+  <:col :let={{_id, monthly_contract}} label="Duration day"><%= monthly_contract.duration_day %></:col>
+  <:col :let={{_id, monthly_contract}} label="Room number"><%= monthly_contract.room_number %></:col>
+  <:col :let={{_id, monthly_contract}} label="Rent fees"><%= monthly_contract.rent_fees %></:col>
+  <:col :let={{_id, monthly_contract}} label="Service fees"><%= monthly_contract.service_fees %></:col>
+  <:col :let={{_id, monthly_contract}} label="Deposit"><%= monthly_contract.deposit %></:col>
+  <:col :let={{_id, monthly_contract}} label="Advance payment"><%= monthly_contract.advance_payment %></:col>
+  <:col :let={{_id, monthly_contract}} label="Keycard fees"><%= monthly_contract.keycard_fees %></:col>
+  <:col :let={{_id, monthly_contract}} label="Keycard number"><%= monthly_contract.keycard_number %></:col>
+  <:col :let={{_id, monthly_contract}} label="Other labels"><%= monthly_contract.other_labels %></:col>
+  <:col :let={{_id, monthly_contract}} label="Other fees"><%= monthly_contract.other_fees %></:col>
+  <:col :let={{_id, monthly_contract}} label="Meter water"><%= monthly_contract.meter_water %></:col>
+  <:col :let={{_id, monthly_contract}} label="Meter electric"><%= monthly_contract.meter_electric %></:col>
+  <:col :let={{_id, monthly_contract}} label="Remarks"><%= monthly_contract.remarks %></:col>
+  <:action :let={{_id, monthly_contract}}>
+    <div class="sr-only">
+      <.link navigate={~p"/monthly_contracts/#{monthly_contract}"}>Show</.link>
+    </div>
+    <.link patch={~p"/monthly_contracts/#{monthly_contract}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={{id, monthly_contract}}>
+    <.link
+      phx-click={JS.push("delete", value: %{id: monthly_contract.id}) |> hide("##{id}")}
+      data-confirm="Are you sure?"
+    >
+      Delete
+    </.link>
+  </:action>
+</.table>
+
+<.modal
+  :if={@live_action in [:new, :edit]}
+  id="monthly_contract-modal"
+  show
+  on_cancel={JS.navigate(~p"/monthly_contracts")}
+>
+  <.live_component
+    module={JResidenceWeb.MonthlyContractLive.FormComponent}
+    id={@monthly_contract.id || :new}
+    title={@page_title}
+    action={@live_action}
+    monthly_contract={@monthly_contract}
+    patch={~p"/monthly_contracts"}
+  />
+</.modal>

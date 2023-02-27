@@ -96,6 +96,14 @@ defmodule JResidenceWeb.Router do
 
     live "/monthly_bookings/:id", MonthlyBookingLive.Show, :show
     live "/monthly_bookings/:id/show/edit", MonthlyBookingLive.Show, :edit
+
+    # Monthly Contract
+    live "/monthly_contracts", MonthlyContractLive.Index, :index
+    live "/monthly_contracts/new", MonthlyContractLive.Index, :new
+    live "/monthly_contracts/:id/edit", MonthlyContractLive.Index, :edit
+
+    live "/monthly_contracts/:id", MonthlyContractLive.Show, :show
+    live "/monthly_contracts/:id/show/edit", MonthlyContractLive.Show, :edit
     # ================================== Invoice ==================================
     # ================================== Receipt ==================================
   end

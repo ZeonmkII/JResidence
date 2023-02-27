@@ -70,4 +70,34 @@ defmodule JResidence.BookingsFixtures do
 
     monthly_booking
   end
+
+  @doc """
+  Generate a monthly_contract.
+  """
+  def monthly_contract_fixture(attrs \\ %{}) do
+    {:ok, monthly_contract} =
+      attrs
+      |> Enum.into(%{
+        advance_payment: "120.5",
+        check_in: ~D[2023-02-26],
+        check_out: ~D[2023-02-26],
+        date_signed: ~D[2023-02-26],
+        deposit: "120.5",
+        duration_day: 42,
+        duration_month: 42,
+        keycard_fees: "120.5",
+        keycard_number: "some keycard_number",
+        meter_electric: "120.5",
+        meter_water: "120.5",
+        other_fees: "120.5",
+        other_labels: "some other_labels",
+        remarks: "some remarks",
+        rent_fees: "120.5",
+        room_number: "some room_number",
+        service_fees: "120.5"
+      })
+      |> JResidence.Bookings.create_monthly_contract()
+
+    monthly_contract
+  end
 end
