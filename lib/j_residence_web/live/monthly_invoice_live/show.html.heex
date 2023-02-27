@@ -1,0 +1,35 @@
+<.header>
+  Monthly invoice <%= @monthly_invoice.id %>
+  <:subtitle>This is a monthly_invoice record from your database.</:subtitle>
+  <:actions>
+    <.link patch={~p"/monthly_invoices/#{@monthly_invoice}/show/edit"} phx-click={JS.push_focus()}>
+      <.button>Edit monthly_invoice</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Bill cycle"><%= @monthly_invoice.bill_cycle %></:item>
+  <:item title="Advanced payment"><%= @monthly_invoice.advanced_payment %></:item>
+  <:item title="Water start"><%= @monthly_invoice.water_start %></:item>
+  <:item title="Water end"><%= @monthly_invoice.water_end %></:item>
+  <:item title="Water unit"><%= @monthly_invoice.water_unit %></:item>
+  <:item title="Electric start"><%= @monthly_invoice.electric_start %></:item>
+  <:item title="Electric end"><%= @monthly_invoice.electric_end %></:item>
+  <:item title="Other labels"><%= @monthly_invoice.other_labels %></:item>
+  <:item title="Other fees"><%= @monthly_invoice.other_fees %></:item>
+  <:item title="Total"><%= @monthly_invoice.total %></:item>
+</.list>
+
+<.back navigate={~p"/monthly_invoices"}>Back to monthly_invoices</.back>
+
+<.modal :if={@live_action == :edit} id="monthly_invoice-modal" show on_cancel={JS.patch(~p"/monthly_invoices/#{@monthly_invoice}")}>
+  <.live_component
+    module={JResidenceWeb.MonthlyInvoiceLive.FormComponent}
+    id={@monthly_invoice.id}
+    title={@page_title}
+    action={@live_action}
+    monthly_invoice={@monthly_invoice}
+    patch={~p"/monthly_invoices/#{@monthly_invoice}"}
+  />
+</.modal>

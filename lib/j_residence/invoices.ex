@@ -293,4 +293,100 @@ defmodule JResidence.Invoices do
   def change_monthly_booking_fee(%MonthlyBookingFee{} = monthly_booking_fee, attrs \\ %{}) do
     MonthlyBookingFee.changeset(monthly_booking_fee, attrs)
   end
+
+  alias JResidence.Invoices.MonthlyInvoice
+
+  @doc """
+  Returns the list of monthly_invoices.
+
+  ## Examples
+
+      iex> list_monthly_invoices()
+      [%MonthlyInvoice{}, ...]
+
+  """
+  def list_monthly_invoices do
+    Repo.all(MonthlyInvoice)
+  end
+
+  @doc """
+  Gets a single monthly_invoice.
+
+  Raises `Ecto.NoResultsError` if the Monthly invoice does not exist.
+
+  ## Examples
+
+      iex> get_monthly_invoice!(123)
+      %MonthlyInvoice{}
+
+      iex> get_monthly_invoice!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_monthly_invoice!(id), do: Repo.get!(MonthlyInvoice, id)
+
+  @doc """
+  Creates a monthly_invoice.
+
+  ## Examples
+
+      iex> create_monthly_invoice(%{field: value})
+      {:ok, %MonthlyInvoice{}}
+
+      iex> create_monthly_invoice(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_monthly_invoice(attrs \\ %{}) do
+    %MonthlyInvoice{}
+    |> MonthlyInvoice.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a monthly_invoice.
+
+  ## Examples
+
+      iex> update_monthly_invoice(monthly_invoice, %{field: new_value})
+      {:ok, %MonthlyInvoice{}}
+
+      iex> update_monthly_invoice(monthly_invoice, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_monthly_invoice(%MonthlyInvoice{} = monthly_invoice, attrs) do
+    monthly_invoice
+    |> MonthlyInvoice.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a monthly_invoice.
+
+  ## Examples
+
+      iex> delete_monthly_invoice(monthly_invoice)
+      {:ok, %MonthlyInvoice{}}
+
+      iex> delete_monthly_invoice(monthly_invoice)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_monthly_invoice(%MonthlyInvoice{} = monthly_invoice) do
+    Repo.delete(monthly_invoice)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking monthly_invoice changes.
+
+  ## Examples
+
+      iex> change_monthly_invoice(monthly_invoice)
+      %Ecto.Changeset{data: %MonthlyInvoice{}}
+
+  """
+  def change_monthly_invoice(%MonthlyInvoice{} = monthly_invoice, attrs \\ %{}) do
+    MonthlyInvoice.changeset(monthly_invoice, attrs)
+  end
 end

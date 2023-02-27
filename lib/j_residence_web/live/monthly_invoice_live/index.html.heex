@@ -1,0 +1,55 @@
+<.header>
+  Listing Monthly invoices
+  <:actions>
+    <.link patch={~p"/monthly_invoices/new"}>
+      <.button>New Monthly invoice</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table
+  id="monthly_invoices"
+  rows={@streams.monthly_invoices}
+  row_click={fn {_id, monthly_invoice} -> JS.navigate(~p"/monthly_invoices/#{monthly_invoice}") end}
+>
+  <:col :let={{_id, monthly_invoice}} label="Bill cycle"><%= monthly_invoice.bill_cycle %></:col>
+  <:col :let={{_id, monthly_invoice}} label="Advanced payment"><%= monthly_invoice.advanced_payment %></:col>
+  <:col :let={{_id, monthly_invoice}} label="Water start"><%= monthly_invoice.water_start %></:col>
+  <:col :let={{_id, monthly_invoice}} label="Water end"><%= monthly_invoice.water_end %></:col>
+  <:col :let={{_id, monthly_invoice}} label="Water unit"><%= monthly_invoice.water_unit %></:col>
+  <:col :let={{_id, monthly_invoice}} label="Electric start"><%= monthly_invoice.electric_start %></:col>
+  <:col :let={{_id, monthly_invoice}} label="Electric end"><%= monthly_invoice.electric_end %></:col>
+  <:col :let={{_id, monthly_invoice}} label="Other labels"><%= monthly_invoice.other_labels %></:col>
+  <:col :let={{_id, monthly_invoice}} label="Other fees"><%= monthly_invoice.other_fees %></:col>
+  <:col :let={{_id, monthly_invoice}} label="Total"><%= monthly_invoice.total %></:col>
+  <:action :let={{_id, monthly_invoice}}>
+    <div class="sr-only">
+      <.link navigate={~p"/monthly_invoices/#{monthly_invoice}"}>Show</.link>
+    </div>
+    <.link patch={~p"/monthly_invoices/#{monthly_invoice}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={{id, monthly_invoice}}>
+    <.link
+      phx-click={JS.push("delete", value: %{id: monthly_invoice.id}) |> hide("##{id}")}
+      data-confirm="Are you sure?"
+    >
+      Delete
+    </.link>
+  </:action>
+</.table>
+
+<.modal
+  :if={@live_action in [:new, :edit]}
+  id="monthly_invoice-modal"
+  show
+  on_cancel={JS.navigate(~p"/monthly_invoices")}
+>
+  <.live_component
+    module={JResidenceWeb.MonthlyInvoiceLive.FormComponent}
+    id={@monthly_invoice.id || :new}
+    title={@page_title}
+    action={@live_action}
+    monthly_invoice={@monthly_invoice}
+    patch={~p"/monthly_invoices"}
+  />
+</.modal>

@@ -62,4 +62,27 @@ defmodule JResidence.InvoicesFixtures do
 
     monthly_booking_fee
   end
+
+  @doc """
+  Generate a monthly_invoice.
+  """
+  def monthly_invoice_fixture(attrs \\ %{}) do
+    {:ok, monthly_invoice} =
+      attrs
+      |> Enum.into(%{
+        advanced_payment: "120.5",
+        bill_cycle: ~D[2023-02-26],
+        electric_end: "120.5",
+        electric_start: "120.5",
+        other_fees: "120.5",
+        other_labels: "some other_labels",
+        total: "120.5",
+        water_end: "120.5",
+        water_start: "120.5",
+        water_unit: "120.5"
+      })
+      |> JResidence.Invoices.create_monthly_invoice()
+
+    monthly_invoice
+  end
 end

@@ -2,6 +2,7 @@ defmodule JResidence.Bookings.MonthlyContract do
   alias JResidence.Tenants.MonthlyCustomer
   alias JResidence.Facilities.Room
   alias JResidence.Bookings.MonthlyBooking
+  alias JResidence.Invoices.MonthlyInvoice
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -29,6 +30,8 @@ defmodule JResidence.Bookings.MonthlyContract do
     belongs_to :monthly_customer, MonthlyCustomer
     belongs_to :monthly_booking, MonthlyBooking
     belongs_to :room, Room
+
+    has_many :monthly_invoice, MonthlyInvoice
 
     timestamps()
   end
