@@ -101,4 +101,100 @@ defmodule JResidence.Invoices do
   def change_daily_booking_fee(%DailyBookingFee{} = daily_booking_fee, attrs \\ %{}) do
     DailyBookingFee.changeset(daily_booking_fee, attrs)
   end
+
+  alias JResidence.Invoices.DailyInvoice
+
+  @doc """
+  Returns the list of daily_invoices.
+
+  ## Examples
+
+      iex> list_daily_invoices()
+      [%DailyInvoice{}, ...]
+
+  """
+  def list_daily_invoices do
+    Repo.all(DailyInvoice)
+  end
+
+  @doc """
+  Gets a single daily_invoice.
+
+  Raises `Ecto.NoResultsError` if the Daily invoice does not exist.
+
+  ## Examples
+
+      iex> get_daily_invoice!(123)
+      %DailyInvoice{}
+
+      iex> get_daily_invoice!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_daily_invoice!(id), do: Repo.get!(DailyInvoice, id)
+
+  @doc """
+  Creates a daily_invoice.
+
+  ## Examples
+
+      iex> create_daily_invoice(%{field: value})
+      {:ok, %DailyInvoice{}}
+
+      iex> create_daily_invoice(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_daily_invoice(attrs \\ %{}) do
+    %DailyInvoice{}
+    |> DailyInvoice.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a daily_invoice.
+
+  ## Examples
+
+      iex> update_daily_invoice(daily_invoice, %{field: new_value})
+      {:ok, %DailyInvoice{}}
+
+      iex> update_daily_invoice(daily_invoice, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_daily_invoice(%DailyInvoice{} = daily_invoice, attrs) do
+    daily_invoice
+    |> DailyInvoice.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a daily_invoice.
+
+  ## Examples
+
+      iex> delete_daily_invoice(daily_invoice)
+      {:ok, %DailyInvoice{}}
+
+      iex> delete_daily_invoice(daily_invoice)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_daily_invoice(%DailyInvoice{} = daily_invoice) do
+    Repo.delete(daily_invoice)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking daily_invoice changes.
+
+  ## Examples
+
+      iex> change_daily_invoice(daily_invoice)
+      %Ecto.Changeset{data: %DailyInvoice{}}
+
+  """
+  def change_daily_invoice(%DailyInvoice{} = daily_invoice, attrs \\ %{}) do
+    DailyInvoice.changeset(daily_invoice, attrs)
+  end
 end

@@ -1,0 +1,51 @@
+<.header>
+  Listing Daily invoices
+  <:actions>
+    <.link patch={~p"/daily_invoices/new"}>
+      <.button>New Daily invoice</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table
+  id="daily_invoices"
+  rows={@streams.daily_invoices}
+  row_click={fn {_id, daily_invoice} -> JS.navigate(~p"/daily_invoices/#{daily_invoice}") end}
+>
+  <:col :let={{_id, daily_invoice}} label="Deposit"><%= daily_invoice.deposit %></:col>
+  <:col :let={{_id, daily_invoice}} label="Keycard fees"><%= daily_invoice.keycard_fees %></:col>
+  <:col :let={{_id, daily_invoice}} label="Other labels"><%= daily_invoice.other_labels %></:col>
+  <:col :let={{_id, daily_invoice}} label="Other fees"><%= daily_invoice.other_fees %></:col>
+  <:col :let={{_id, daily_invoice}} label="Remaining"><%= daily_invoice.remaining %></:col>
+  <:col :let={{_id, daily_invoice}} label="Total"><%= daily_invoice.total %></:col>
+  <:action :let={{_id, daily_invoice}}>
+    <div class="sr-only">
+      <.link navigate={~p"/daily_invoices/#{daily_invoice}"}>Show</.link>
+    </div>
+    <.link patch={~p"/daily_invoices/#{daily_invoice}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={{id, daily_invoice}}>
+    <.link
+      phx-click={JS.push("delete", value: %{id: daily_invoice.id}) |> hide("##{id}")}
+      data-confirm="Are you sure?"
+    >
+      Delete
+    </.link>
+  </:action>
+</.table>
+
+<.modal
+  :if={@live_action in [:new, :edit]}
+  id="daily_invoice-modal"
+  show
+  on_cancel={JS.navigate(~p"/daily_invoices")}
+>
+  <.live_component
+    module={JResidenceWeb.DailyInvoiceLive.FormComponent}
+    id={@daily_invoice.id || :new}
+    title={@page_title}
+    action={@live_action}
+    daily_invoice={@daily_invoice}
+    patch={~p"/daily_invoices"}
+  />
+</.modal>

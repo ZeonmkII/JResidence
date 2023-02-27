@@ -113,6 +113,14 @@ defmodule JResidenceWeb.Router do
     live "/daily_booking_fees/:id", DailyBookingFeeLive.Show, :show
     live "/daily_booking_fees/:id/show/edit", DailyBookingFeeLive.Show, :edit
 
+    # Daily Invoice
+    live "/daily_invoices", DailyInvoiceLive.Index, :index
+    live "/daily_invoices/new", DailyInvoiceLive.Index, :new
+    live "/daily_invoices/:id/edit", DailyInvoiceLive.Index, :edit
+
+    live "/daily_invoices/:id", DailyInvoiceLive.Show, :show
+    live "/daily_invoices/:id/show/edit", DailyInvoiceLive.Show, :edit
+
     # ================================== Receipt ==================================
   end
 
