@@ -202,4 +202,62 @@ defmodule JResidence.TenantsTest do
       assert %Ecto.Changeset{} = Tenants.change_daily_customer(daily_customer)
     end
   end
+
+  describe "monthly_customers" do
+    alias JResidence.Tenants.MonthlyCustomer
+
+    import JResidence.TenantsFixtures
+
+    @invalid_attrs %{b_contract: nil, b_current: nil, b_tenant: nil}
+
+    test "list_monthly_customers/0 returns all monthly_customers" do
+      monthly_customer = monthly_customer_fixture()
+      assert Tenants.list_monthly_customers() == [monthly_customer]
+    end
+
+    test "get_monthly_customer!/1 returns the monthly_customer with given id" do
+      monthly_customer = monthly_customer_fixture()
+      assert Tenants.get_monthly_customer!(monthly_customer.id) == monthly_customer
+    end
+
+    test "create_monthly_customer/1 with valid data creates a monthly_customer" do
+      valid_attrs = %{b_contract: "some b_contract", b_current: "some b_current", b_tenant: "some b_tenant"}
+
+      assert {:ok, %MonthlyCustomer{} = monthly_customer} = Tenants.create_monthly_customer(valid_attrs)
+      assert monthly_customer.b_contract == "some b_contract"
+      assert monthly_customer.b_current == "some b_current"
+      assert monthly_customer.b_tenant == "some b_tenant"
+    end
+
+    test "create_monthly_customer/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Tenants.create_monthly_customer(@invalid_attrs)
+    end
+
+    test "update_monthly_customer/2 with valid data updates the monthly_customer" do
+      monthly_customer = monthly_customer_fixture()
+      update_attrs = %{b_contract: "some updated b_contract", b_current: "some updated b_current", b_tenant: "some updated b_tenant"}
+
+      assert {:ok, %MonthlyCustomer{} = monthly_customer} = Tenants.update_monthly_customer(monthly_customer, update_attrs)
+      assert monthly_customer.b_contract == "some updated b_contract"
+      assert monthly_customer.b_current == "some updated b_current"
+      assert monthly_customer.b_tenant == "some updated b_tenant"
+    end
+
+    test "update_monthly_customer/2 with invalid data returns error changeset" do
+      monthly_customer = monthly_customer_fixture()
+      assert {:error, %Ecto.Changeset{}} = Tenants.update_monthly_customer(monthly_customer, @invalid_attrs)
+      assert monthly_customer == Tenants.get_monthly_customer!(monthly_customer.id)
+    end
+
+    test "delete_monthly_customer/1 deletes the monthly_customer" do
+      monthly_customer = monthly_customer_fixture()
+      assert {:ok, %MonthlyCustomer{}} = Tenants.delete_monthly_customer(monthly_customer)
+      assert_raise Ecto.NoResultsError, fn -> Tenants.get_monthly_customer!(monthly_customer.id) end
+    end
+
+    test "change_monthly_customer/1 returns a monthly_customer changeset" do
+      monthly_customer = monthly_customer_fixture()
+      assert %Ecto.Changeset{} = Tenants.change_monthly_customer(monthly_customer)
+    end
+  end
 end

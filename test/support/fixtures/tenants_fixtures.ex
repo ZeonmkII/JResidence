@@ -48,4 +48,20 @@ defmodule JResidence.TenantsFixtures do
 
     daily_customer
   end
+
+  @doc """
+  Generate a monthly_customer.
+  """
+  def monthly_customer_fixture(attrs \\ %{}) do
+    {:ok, monthly_customer} =
+      attrs
+      |> Enum.into(%{
+        b_contract: "some b_contract",
+        b_current: "some b_current",
+        b_tenant: "some b_tenant"
+      })
+      |> JResidence.Tenants.create_monthly_customer()
+
+    monthly_customer
+  end
 end

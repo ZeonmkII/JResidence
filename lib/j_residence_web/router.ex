@@ -22,7 +22,8 @@ defmodule JResidenceWeb.Router do
 
     get "/", PageController, :home
 
-    # Tenants / Customer
+    # ================================== Tenants ==================================
+    # Customer
     live "/customers", CustomerLive.Index, :index
     live "/customers/new", CustomerLive.Index, :new
     live "/customers/:id/edit", CustomerLive.Index, :edit
@@ -30,13 +31,26 @@ defmodule JResidenceWeb.Router do
     live "/customers/:id", CustomerLive.Show, :show
     live "/customers/:id/show/edit", CustomerLive.Show, :edit
 
-    # Tenants / Daily Customer
+    # Daily Customer
     live "/daily_customers", DailyCustomerLive.Index, :index
     live "/daily_customers/new", DailyCustomerLive.Index, :new
     live "/daily_customers/:id/edit", DailyCustomerLive.Index, :edit
 
     live "/daily_customers/:id", DailyCustomerLive.Show, :show
     live "/daily_customers/:id/show/edit", DailyCustomerLive.Show, :edit
+
+    # Monthly Customer
+    live "/monthly_customers", MonthlyCustomerLive.Index, :index
+    live "/monthly_customers/new", MonthlyCustomerLive.Index, :new
+    live "/monthly_customers/:id/edit", MonthlyCustomerLive.Index, :edit
+
+    live "/monthly_customers/:id", MonthlyCustomerLive.Show, :show
+    live "/monthly_customers/:id/show/edit", MonthlyCustomerLive.Show, :edit
+
+    # ================================= Facilities ================================
+    # ================================== Booking ==================================
+    # ================================== Invoice ==================================
+    # ================================== Receipt ==================================
   end
 
   # Other scopes may use custom stacks.

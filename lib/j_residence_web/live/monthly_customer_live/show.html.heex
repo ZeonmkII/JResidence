@@ -1,0 +1,28 @@
+<.header>
+  Monthly customer <%= @monthly_customer.id %>
+  <:subtitle>This is a monthly_customer record from your database.</:subtitle>
+  <:actions>
+    <.link patch={~p"/monthly_customers/#{@monthly_customer}/show/edit"} phx-click={JS.push_focus()}>
+      <.button>Edit monthly_customer</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="B contract"><%= @monthly_customer.b_contract %></:item>
+  <:item title="B current"><%= @monthly_customer.b_current %></:item>
+  <:item title="B tenant"><%= @monthly_customer.b_tenant %></:item>
+</.list>
+
+<.back navigate={~p"/monthly_customers"}>Back to monthly_customers</.back>
+
+<.modal :if={@live_action == :edit} id="monthly_customer-modal" show on_cancel={JS.patch(~p"/monthly_customers/#{@monthly_customer}")}>
+  <.live_component
+    module={JResidenceWeb.MonthlyCustomerLive.FormComponent}
+    id={@monthly_customer.id}
+    title={@page_title}
+    action={@live_action}
+    monthly_customer={@monthly_customer}
+    patch={~p"/monthly_customers/#{@monthly_customer}"}
+  />
+</.modal>

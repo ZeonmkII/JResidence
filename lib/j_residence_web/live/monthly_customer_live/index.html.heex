@@ -1,0 +1,48 @@
+<.header>
+  Listing Monthly customers
+  <:actions>
+    <.link patch={~p"/monthly_customers/new"}>
+      <.button>New Monthly customer</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table
+  id="monthly_customers"
+  rows={@streams.monthly_customers}
+  row_click={fn {_id, monthly_customer} -> JS.navigate(~p"/monthly_customers/#{monthly_customer}") end}
+>
+  <:col :let={{_id, monthly_customer}} label="B contract"><%= monthly_customer.b_contract %></:col>
+  <:col :let={{_id, monthly_customer}} label="B current"><%= monthly_customer.b_current %></:col>
+  <:col :let={{_id, monthly_customer}} label="B tenant"><%= monthly_customer.b_tenant %></:col>
+  <:action :let={{_id, monthly_customer}}>
+    <div class="sr-only">
+      <.link navigate={~p"/monthly_customers/#{monthly_customer}"}>Show</.link>
+    </div>
+    <.link patch={~p"/monthly_customers/#{monthly_customer}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={{id, monthly_customer}}>
+    <.link
+      phx-click={JS.push("delete", value: %{id: monthly_customer.id}) |> hide("##{id}")}
+      data-confirm="Are you sure?"
+    >
+      Delete
+    </.link>
+  </:action>
+</.table>
+
+<.modal
+  :if={@live_action in [:new, :edit]}
+  id="monthly_customer-modal"
+  show
+  on_cancel={JS.navigate(~p"/monthly_customers")}
+>
+  <.live_component
+    module={JResidenceWeb.MonthlyCustomerLive.FormComponent}
+    id={@monthly_customer.id || :new}
+    title={@page_title}
+    action={@live_action}
+    monthly_customer={@monthly_customer}
+    patch={~p"/monthly_customers"}
+  />
+</.modal>
