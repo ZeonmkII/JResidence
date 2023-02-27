@@ -38,4 +38,20 @@ defmodule JResidence.FacilitiesFixtures do
 
     floor
   end
+
+  @doc """
+  Generate a room.
+  """
+  def room_fixture(attrs \\ %{}) do
+    {:ok, room} =
+      attrs
+      |> Enum.into(%{
+        b_booked: "some b_booked",
+        b_occupied: "some b_occupied",
+        room_number: "some room_number"
+      })
+      |> JResidence.Facilities.create_room()
+
+    room
+  end
 end

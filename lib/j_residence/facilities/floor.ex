@@ -1,5 +1,5 @@
 defmodule JResidence.Facilities.Floor do
-  alias JResidence.Facilities.Building
+  alias JResidence.Facilities.{Building, Room}
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -9,6 +9,8 @@ defmodule JResidence.Facilities.Floor do
     field :floor_number, :string
 
     belongs_to :building, Building
+
+    has_many :rooms, Room
 
     timestamps()
   end
