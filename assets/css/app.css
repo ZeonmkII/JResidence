@@ -3,3 +3,225 @@
 @import "tailwindcss/utilities";
 
 /* This file is for your main application CSS */
+/* LiveView specific classes for your customizations */
+.invalid-feedback {
+    color: #a94442;
+    display: block;
+    margin: -1rem 0 2rem;
+  }
+  
+  .phx-no-feedback.invalid-feedback,
+  .phx-no-feedback .invalid-feedback {
+    display: none;
+  }
+  
+  .phx-click-loading {
+    opacity: 0.5;
+    transition: opacity 1s ease-out;
+  }
+  
+  .phx-disconnected {
+    cursor: wait;
+  }
+  
+  .phx-disconnected * {
+    pointer-events: none;
+  }
+  
+  .phx-modal {
+    opacity: 1 !important;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+  
+  .phx-modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+  }
+  
+  .phx-modal-close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .phx-modal-close:hover,
+  .phx-modal-close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  
+  
+  /* Alerts and form errors */
+  .alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+  }
+  
+  .alert-info {
+    color: #31708f;
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+  }
+  
+  .alert-warning {
+    color: #8a6d3b;
+    background-color: #fcf8e3;
+    border-color: #faebcc;
+  }
+  
+  .alert-danger {
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+  }
+  
+  .alert p {
+    margin-bottom: 0;
+  }
+  
+  .alert:empty {
+    display: none;
+  }
+
+
+  /* *********************************** */
+/*             Input Field             */
+/* *********************************** */
+
+/* TextBox Input สำหรับตัวแปรประเภท String */
+.string-input {
+    @apply bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 font-mono leading-tight;
+}
+
+.string-input:focus {
+    @apply outline-none bg-white border-yellow-500;
+}
+
+/* TextBox Input สำหรับตัวแปรประเภท String -> เวลาอ่านค่าที่ดึงมาจาก DB */
+.string-input-read {
+    @apply bg-gray-400 appearance-none border-2 border-white rounded w-full py-2 px-4 text-gray-700 font-mono leading-tight cursor-not-allowed;
+}
+
+/* Label สำหรับ InputField */
+.input-label {
+    @apply block text-gray-600 font-mono font-bold text-base text-left mb-1 pr-4;
+}
+
+/* Error Text เวลา Validate Form ไม่ผ่าน */
+.input-error-label {
+    @apply text-red-600 text-xs italic;
+}
+
+/* เครื่องหมาย (*) สำหรับช่อง Input ที่ required */
+.required-star {
+    @apply text-red-600 font-mono font-medium text-base;
+}
+
+/* ตัวแบ่งหมวดหมู่ ในหน้า Customer Dashboard (ตัวอักษร) */
+.customer-dashboard-header {
+    @apply text-gray-200 font-bold font-mono text-xl text-center mb-6;
+}
+
+.customer-dashboard-header:hover {
+    @apply text-yellow-400 cursor-pointer;
+}
+
+/* ตัวแบ่งหมวดหมู่ ในหน้า Customer Dashboard (แถบสีเทาๆ ใหญ่ๆ) */
+.customer-dashboard-title-bg {
+    @apply justify-center mt-6 bg-gray-800 mb-6 rounded-lg;
+}
+
+/* สีของ Cell ในหน้า Customer Dashboard (จะมี logic ในหน้า html ในการกำหนดสี) */
+.table-row-default {
+    @apply bg-gray-100;
+}
+
+.table-row-default:hover {
+    @apply bg-gray-300;
+}
+
+.table-row-alert {
+    @apply bg-red-200;
+}
+
+.table-row-alert:hover {
+    @apply bg-red-400;
+}
+
+.table-row-clear {
+    @apply bg-green-200;
+}
+
+.table-row-clear:hover {
+    @apply bg-green-400;
+}
+
+/* *********************************** */
+/*              Button                 */
+/* *********************************** */
+
+/* ปุ่มแบบ Default ที่อยู่ด้านล่างสุดของแต่ละ Form */
+.btn-form-submit {
+    @apply shadow bg-yellow-600 text-white font-bold py-2 px-4 rounded;
+}
+
+.btn-form-submit:hover {
+    @apply bg-yellow-500;
+}
+
+.btn-form-submit:focus {
+    @apply shadow-lg outline-none;
+}
+
+/* *********************************** */
+/*                Text                 */
+/* *********************************** */
+
+/* Header สำหรับชื่อหน้า */
+.page-title-header {
+    @apply text-yellow-600 font-bold font-mono text-3xl text-center;
+}
+
+.page-title-header:hover {
+    @apply text-yellow-400;
+}
+
+/* ©️Copyright text บรรทัดล่างสุดของหน้า */
+.copyright-text {
+    @apply text-center text-gray-500 text-xs;
+}
+
+/* *********************************** */
+/*              Container              */
+/* *********************************** */
+
+.page-bg {
+    @apply bg-gray-800 h-screen w-screen;
+}
+
+.page-container {
+    @apply mx-auto h-full flex justify-center items-center;
+}
+
+.div-main-form {
+    @apply border-yellow-600 p-8 border-t-4 bg-white mb-6 rounded-lg shadow-lg;
+}
+
+.title-inside {
+    @apply text-gray-600 text-2xl font-mono font-bold text-left mb-1;
+}

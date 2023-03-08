@@ -20,7 +20,13 @@ defmodule JResidenceWeb.Router do
   scope "/", JResidenceWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
+    # get "/", PageController, :home
+
+    # HomePage => ค้นหาข้อมูลลูกค้าเก่าจากเลขประจำตัวประชาชน หรือ กดสร้างลูกค้าใหม่
+    live "/", CustomerLive.Search
+
+    # User Dashboard => แสดงข้อมูลทุกอย่างของลูกค้าจาก Database -> สามารถทำการจอง / เช็คหนี้ค้างในระบบ / ฯลฯ
+    live "/customers/dashboard", CustomerLive.Dashboard, :show
 
     # ================================== Tenants ==================================
     # Customer

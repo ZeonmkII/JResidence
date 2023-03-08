@@ -37,6 +37,10 @@ defmodule JResidence.Tenants do
   """
   def get_customer!(id), do: Repo.get!(Customer, id)
 
+  def get_customer_by_id_number(id_number) do
+    Repo.get_by(Customer, %{id_number: id_number})
+  end
+
   @doc """
   Creates a customer.
 
