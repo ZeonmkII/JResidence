@@ -30,11 +30,15 @@ defmodule JResidenceWeb.CustomerLive.Search do
          |> assign(error: true, error_msg: "⚠️ ไม่พบข้อมูลผู้ใช้ เลขประจำตัวประชาชน : #{id_number}")}
 
       _customer ->
-        # {:noreply,
-        #  push_redirect(socket,
-        #    to: Routes.customer_dashboard_path(socket, :show, id_number: id_number)
-        #  )}
-        {:noreply, push_navigate(socket, to: "#")}
+        {
+          :noreply,
+          #  push_navigate(socket,
+          #    to: Routes.customer_dashboard_path(socket, :show, id_number: id_number)
+          #  )}
+          push_navigate(socket, to: "/customers/dashboard")
+        }
+
+        # {:noreply, push_navigate(socket, to: "#")}
     end
   end
 

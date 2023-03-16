@@ -285,6 +285,10 @@ defmodule JResidence.Tenants do
     Repo.delete(monthly_customer)
   end
 
+  @spec change_monthly_customer(
+          %JResidence.Tenants.MonthlyCustomer{optional(atom) => any},
+          :invalid | %{optional(:__struct__) => none, optional(atom | binary) => any}
+        ) :: Ecto.Changeset.t()
   @doc """
   Returns an `%Ecto.Changeset{}` for tracking monthly_customer changes.
 
@@ -296,5 +300,66 @@ defmodule JResidence.Tenants do
   """
   def change_monthly_customer(%MonthlyCustomer{} = monthly_customer, attrs \\ %{}) do
     MonthlyCustomer.changeset(monthly_customer, attrs)
+  end
+
+  # ******************************************
+  # ************* List Function **************
+  # ******************************************
+
+  def get_one_random_user_id() do
+    # conn = Neo.conn()
+    # query = "MATCH (u:User) WHERE NOT exists(u.delete) RETURN u AS User ORDER BY rand() LIMIT 1"
+    # response = Neo.query!(conn, query)
+
+    # _query =
+    #   Enum.map(response.results, & &1["User"])
+    #   |> List.first()
+
+    # if we want only UUID;
+    # query.properties["uuid"]
+  end
+
+  def list_monthly_bookings_for_customer(id) do
+    # conn = Neo.conn()
+
+    # query =
+    #   "MATCH (c:Customer{idNumber: \"#{id}\"})-->(r:MonthlyRent) MATCH (r)-->(b:MonthlyBooking) WHERE NOT exists(b.delete) RETURN b AS Booking"
+
+    # response = Neo.query!(conn, query)
+
+    # _bookings = Enum.map(response.results, & &1["Booking"])
+  end
+
+  def list_daily_bookings_for_customer(id) do
+    # conn = Neo.conn()
+
+    # query =
+    #   "MATCH (c:Customer{idNumber: \"#{id}\"})-->(r:DailyRent) MATCH (r)-->(b:DailyBooking) WHERE NOT exists(b.delete) RETURN b AS Booking"
+
+    # response = Neo.query!(conn, query)
+
+    # _bookings = Enum.map(response.results, & &1["Booking"])
+  end
+
+  def list_checkins_for_customer(id) do
+    # conn = Neo.conn()
+
+    # query =
+    #   "MATCH (c:Customer{idNumber: \"#{id}\"})-->(r:DailyRent) MATCH (r)-[*1..2]->(k:Checkin) WHERE NOT exists(k.delete) RETURN k AS Checkin"
+
+    # response = Neo.query!(conn, query)
+
+    # _checkins = Enum.map(response.results, & &1["Checkin"])
+  end
+
+  def list_contracts_for_customer(id) do
+    # conn = Neo.conn()
+
+    # query =
+    #   "MATCH (c:Customer{idNumber: \"#{id}\"})-->(r:MonthlyRent) MATCH (r)-[*1..2]->(k:Contract) WHERE NOT exists(k.delete) RETURN k AS Contract"
+
+    # response = Neo.query!(conn, query)
+
+    # _contracts = Enum.map(response.results, & &1["Contract"])
   end
 end
