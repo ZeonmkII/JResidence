@@ -26,7 +26,7 @@ defmodule JResidenceWeb.Router do
     live "/", CustomerLive.Search
 
     # User Dashboard => แสดงข้อมูลทุกอย่างของลูกค้าจาก Database -> สามารถทำการจอง / เช็คหนี้ค้างในระบบ / ฯลฯ
-    live "/customers/dashboard", CustomerLive.Dashboard, :show
+    live "/customers/dashboard/:id", CustomerLive.Dashboard, :show
 
     # ================================== Tenants ==================================
     # Customer

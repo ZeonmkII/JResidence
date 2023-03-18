@@ -29,22 +29,14 @@ defmodule JResidenceWeb.CustomerLive.Search do
          socket
          |> assign(error: true, error_msg: "⚠️ ไม่พบข้อมูลผู้ใช้ เลขประจำตัวประชาชน : #{id_number}")}
 
-      _customer ->
-        {
-          :noreply,
-          #  push_navigate(socket,
-          #    to: Routes.customer_dashboard_path(socket, :show, id_number: id_number)
-          #  )}
-          push_navigate(socket, to: "/customers/dashboard")
-        }
-
-        # {:noreply, push_navigate(socket, to: "#")}
+      customer ->
+        {:noreply,
+          push_navigate(socket, to: ~p"/customers/dashboard/#{customer.id_number}")}
     end
   end
 
   def handle_event("new_customer", _assign, socket) do
-    {:noreply, push_navigate(socket, to: "#")}
-    # {:noreply, push_navigate(socket, to: Routes.customer_create_path(socket, :new))}
+    {:noreply, push_navigate(socket, to: ~p"/customers/new")}
   end
 
   def handle_event("delete", %{"id" => id}, socket) do

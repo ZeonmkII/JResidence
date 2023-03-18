@@ -285,10 +285,6 @@ defmodule JResidence.Tenants do
     Repo.delete(monthly_customer)
   end
 
-  @spec change_monthly_customer(
-          %JResidence.Tenants.MonthlyCustomer{optional(atom) => any},
-          :invalid | %{optional(:__struct__) => none, optional(atom | binary) => any}
-        ) :: Ecto.Changeset.t()
   @doc """
   Returns an `%Ecto.Changeset{}` for tracking monthly_customer changes.
 
@@ -319,7 +315,7 @@ defmodule JResidence.Tenants do
     # query.properties["uuid"]
   end
 
-  def list_monthly_bookings_for_customer(id) do
+  def list_monthly_bookings_for_customer(_id) do
     # conn = Neo.conn()
 
     # query =
@@ -330,7 +326,7 @@ defmodule JResidence.Tenants do
     # _bookings = Enum.map(response.results, & &1["Booking"])
   end
 
-  def list_daily_bookings_for_customer(id) do
+  def list_daily_bookings_for_customer(_id) do
     # conn = Neo.conn()
 
     # query =
@@ -341,7 +337,7 @@ defmodule JResidence.Tenants do
     # _bookings = Enum.map(response.results, & &1["Booking"])
   end
 
-  def list_checkins_for_customer(id) do
+  def list_checkins_for_customer(_id) do
     # conn = Neo.conn()
 
     # query =
@@ -352,7 +348,7 @@ defmodule JResidence.Tenants do
     # _checkins = Enum.map(response.results, & &1["Checkin"])
   end
 
-  def list_contracts_for_customer(id) do
+  def list_contracts_for_customer(_id) do
     # conn = Neo.conn()
 
     # query =

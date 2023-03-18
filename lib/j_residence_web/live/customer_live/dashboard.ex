@@ -21,7 +21,7 @@ defmodule JResidenceWeb.CustomerLive.Dashboard do
       |> assign(:show_customer_info, false)
       |> assign(:show_daily_bookings, true)
       |> assign(:show_contracts, true)
-      |> assign(:debug, true)
+      |> assign(:debug, false)
       |> assign(:show_monthly_bookings, true)
       |> assign(:checkins, list_daily_check_ins(id))
       |> assign(:show_checkins, true)
@@ -70,8 +70,7 @@ defmodule JResidenceWeb.CustomerLive.Dashboard do
   def handle_event("book_monthly", %{"value" => id}, socket) do
     {:noreply,
      push_navigate(socket,
-       to: "#"
-       #    to: Routes.monthly_booking_create_path(socket, :new, id: id)
+       to: Routes.monthly_booking_create_path(socket, :new, id: id)
      )}
   end
 
@@ -101,7 +100,7 @@ defmodule JResidenceWeb.CustomerLive.Dashboard do
      push_navigate(socket,
        to:
          Routes.contract_create_path(socket, :edit, %{
-           id: socket.assigns.customer.uuid,
+           id: socket.assigns.customer.id,
            booking_id: id
          })
      )}
@@ -112,7 +111,7 @@ defmodule JResidenceWeb.CustomerLive.Dashboard do
      push_navigate(socket,
        to:
          Routes.checkin_create_path(socket, :edit, %{
-           id: socket.assigns.customer.uuid,
+           id: socket.assigns.customer.id,
            booking_id: id
          })
      )}
@@ -143,22 +142,22 @@ defmodule JResidenceWeb.CustomerLive.Dashboard do
   end
 
   def handle_event("delete_m_booking", %{"id" => id}, socket) do
-    Booking.delete_monthly_booking(id)
+    Bookings.delete_monthly_booking(id)
     {:noreply, push_patch(socket, to: "#")}
   end
 
   def handle_event("delete_d_booking", %{"id" => id}, socket) do
-    Booking.delete_daily_booking(id)
+    Bookings.delete_daily_booking(id)
     {:noreply, push_patch(socket, to: "#")}
   end
 
   def handle_event("delete_contract", %{"id" => id}, socket) do
-    Booking.delete_contract(id)
+    Bookings.delete_monthly_contract(id)
     {:noreply, push_patch(socket, to: "#")}
   end
 
   def handle_event("delete_checkin", %{"id" => id}, socket) do
-    Booking.delete_checkin(id)
+    Bookings.delete_daily_check_in(id)
     {:noreply, push_patch(socket, to: "#")}
   end
 
